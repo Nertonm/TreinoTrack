@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Routine {
 	double planId;
-	string name;
+	String name;
 	double duration;
 	List<Exercise> exercises;
 	User assignedTo;
