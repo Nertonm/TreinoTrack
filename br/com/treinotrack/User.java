@@ -3,7 +3,7 @@ import br.com.treinotrack.Tracker;
 
 public class User {
     private String name;
-    private int age;
+    private byte age;
     private float height;
     private float weight;
     private float imc;
