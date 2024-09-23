@@ -82,6 +82,24 @@ public class Admin {
         }
     }
 
+    public void DeleteUser(){
+        if(users.isEmpty()){
+            System.out.println("Não há usuarios a serem deletados");
+            return;
+        }
+        System.out.println("Dgite o indice do usuario a ser deletado:");
+        int i = scan.nextInt();
+        scan.nextLine();
+
+        if(i>=0 && i< users.size()){
+            users.remove(i);
+            System.out.println("Usuario removido.");
+        }
+        else{
+            System.out.println("Indice invalido!");
+        }
+    }
+
 }
 
 
