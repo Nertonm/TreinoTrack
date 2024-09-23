@@ -45,10 +45,46 @@ public class Admin {
         }
     }
 
-    public void UpdateUser{
+    public void UpdateUser(){
+        System.out.println("Digite o índice do usuario:");
+        int i = scan.nextInt();
+        scan.nextLine();
+
+        if(i>=0 && i< users.size()){
+            User user = users.get(i);
+            System.out.println("Atualizando informações para: " + user.getName());
+            System.out.println("Digite o novo nome (pressione Enter para manter o atual):");
+            String newName = scan.nextLine(); // Lê o novo nome
+
+            if (!newName.isEmpty()) {
+                user.setName(newName); // Atualiza o nome se não estiver vazio
+            }
+
+            System.out.println("Digite a nova idade (pressione Enter para manter o atual):");
+            String ageInput = scan.nextLine();
+            if (!ageInput.isEmpty()) {
+                byte newAge = Byte.parseByte(ageInput); // Converte para byte
+                user.setAge(newAge); // Atualiza a idade
+            }
+
+            System.out.println("Digite a nova altura(pressione Enter para manter o atual):");
+            float HeigthInpult = scan.nextFloat();
+            user.setHeight(HeigthInpult);
+
+
+            System.out.println("Digite  novo peso(pressione Enter para manter o atual):");
+            float WeigthInput = scan.nextFloat();
+            user.setWeight(WeigthInput);
+
+            System.out.println("Usuário atualizado com sucesso!");
+        } else {
+            System.out.println("Índice inválido!"); // Mensagem de erro
+        }
     }
 
-
-
-
 }
+
+
+
+
+
