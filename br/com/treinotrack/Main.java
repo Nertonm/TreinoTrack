@@ -9,8 +9,10 @@ public class Main {
         ArrayList<User> users = new ArrayList<User>();
         Admin ADM = new Admin(users);
         ADM.CreatNewUser();
+        ADM.CreatNewUser();
         ADM.ReadUserList();
-
+        ADM.UpdateUser();
+        ADM.ReadUserList();
 
 
 
