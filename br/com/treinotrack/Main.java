@@ -13,6 +13,8 @@ public class Main {
         ADM.ReadUserList();
         ADM.UpdateUser();
         ADM.ReadUserList();
+        ADM.DeleteUser();
+        ADM.ReadUserList();
 
 
 
