@@ -1,4 +1,5 @@
 package br.com.treinotrack;
+import br.com.treinotrack.models.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -8,8 +9,8 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         ArrayList<User> users = new ArrayList<User>();
         Admin ADM = new Admin(users);
-        ADM.CreatNewUser();
-        ADM.CreatNewUser();
+        ADM.CreateNewUser();
+        ADM.CreateNewUser();
         ADM.ReadUserList();
         ADM.UpdateUser();
         ADM.ReadUserList();
