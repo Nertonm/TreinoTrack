@@ -1,25 +1,23 @@
 package br.com.treinotrack.models;
 
-import br.com.treinotrack.models.exercises.Exercise;
-
+import br.com.treinotrack.models.exercises.*;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Workout {
-    double planId;
-    String name;
-    double duration;
-    List<Exercise> exercises;
-    User assignedTo;
+    private LocalDate data;
+    private List<Exercise>  workout;
 
-    public static class Goals {
-
+    //Builder
+    public Workout(LocalDate data, List<Exercise> workout){
+        this.data = data;
+        this.workout = workout;
     }
 
-    public static class WorkoutHistory {
+    public LocalDate getData() {return data;}
+    public void setData(LocalDate data) {this.data = data;}
 
-    }
+    public List<Exercise> getWorkout() {return workout;}
+    public void setWorkout(List<Exercise> workout) {this.workout = workout;}
 
-    public static class WorkoutSession {
-
-    }
 }
