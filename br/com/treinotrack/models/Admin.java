@@ -46,32 +46,25 @@ public class Admin {
             User user = users.get(i);
             System.out.println("Atualizando informações para: " + user.getName());
             System.out.println("Digite o novo nome (pressione Enter para manter o atual):");
-            String newName = Util.getString(); // Lê o novo nome
-
-            if (!newName.isEmpty()) {
+            String newName = Util.getString(); 
+            if (!newName.isEmpty()) 
                 user.setName(newName); // Atualiza o nome se não estiver vazio
-            }
-
             System.out.println("Digite a nova idade (pressione Enter para manter o atual):");
             String ageInput = Util.getString();
             if (!ageInput.isEmpty()) {
                 byte newAge = Byte.parseByte(ageInput); // Converte para byte
                 user.setAge(newAge); // Atualiza a idade
             }
-
             System.out.println("Digite a nova altura(pressione Enter para manter o atual):");
             float HeigthInpult = Util.getFloat();
             user.setHeight(HeigthInpult);
-
-
             System.out.println("Digite  novo peso(pressione Enter para manter o atual):");
             float WeigthInput = Util.getFloat();
             user.setWeight(WeigthInput);
-
             System.out.println("Usuário atualizado com sucesso!");
-        } else {
+        } 
+        else 
             System.out.println("Índice inválido!"); // Mensagem de erro
-        }
     }
 
     public void DeleteUser(){
@@ -80,16 +73,14 @@ public class Admin {
             return;
         }
         System.out.println("Dgite o indice do usuario a ser deletado:");
-        int i = Util.getInt();
+        int index = Util.getInt();
         Util.getString();
-
-        if(i>=0 && i< users.size()){
-            users.remove(i);
+        if(index >= 0 && index< users.size()){
+            users.remove(index);
             System.out.println("Usuario removido.");
         }
-        else{
+        else
             System.out.println("Indice invalido!");
-        }
     }
 }
 
