@@ -3,7 +3,6 @@ import br.com.treinotrack.service.Util;
 import java.util.ArrayList;
 
 public class Admin {
-
     ArrayList<User> user = new ArrayList<User>();
     public Admin(ArrayList<User>user) {this.user = user;}
 
