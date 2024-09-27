@@ -6,6 +6,11 @@ import java.util.List;
 
 public class Tracker {
 	double trackerId;
-	List<Workout.WorkoutHistory> workoutHistory;
-	
+	//List<Workout.WorkoutHistory> workoutHistory;
+
 }
+/*
+    public static class Goals { }
+    public static class WorkoutHistory { }
+    public static class WorkoutSession { }
+    */
