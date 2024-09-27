@@ -32,8 +32,5 @@ public class User {
 	public float getWeight() {return weight;} // acessa o peso
 	public void setWeight(float weight) {this.weight = weight;} // pega o peso
 
-
-
-
 }
 
