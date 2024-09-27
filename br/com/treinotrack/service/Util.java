@@ -32,4 +32,16 @@ public class Util {
             }
         }
     }
+
+    public static int getInt(){
+        while (true) { // verificação de error
+            try {
+                return scanner.nextInt();
+            }
+            catch (InputMismatchException error){
+                System.out.print("Entrada Inválida");
+                scanner.next(); // Limpa o Scanner
+            }
+        }
+    }
 }
