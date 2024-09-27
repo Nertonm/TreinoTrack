@@ -1,10 +1,13 @@
 package br.com.treinotrack.models;
 import br.com.treinotrack.service.Util;
+import br.com.treinotrack.models.*;
 import java.util.ArrayList;
 
 public class Admin {
-    ArrayList<User> user = new ArrayList<User>();
-    public Admin(ArrayList<User>user) {this.user = user;}
+    ArrayList<User> users = new ArrayList<User>();
+    
+    public Admin() {
+    }
 
     public void CreateNewUser(){
         System.out.println("Digite o nome do Usuario:");
@@ -15,32 +18,32 @@ public class Admin {
         float height = Util.getFloat();
         System.out.println("Digite o peso do Usuario:");
         float weight = Util.getFloat();
-
         User newUser = new User(name, age, height, weight);
-        user.add(newUser);
+        users.add(newUser);
     }
 
     public void ReadUserList(){
-        /*
-        if(user==null){
-            System.out.println("Não há usuarios cadastrados");
+        if (users == null){
+            System.out.println("Não há usuarios");
             return;
         }
-        System.out.println("Lista de Usuarios:");
-        for(int i = 0; i< user.size();i++){
-            User user = User.get(i);
-            System.out.println("Indice:"+ i + "\n Nome:"+ user.getName()+ "\n Idade:"+user.getAge()+"\n Altura:" +user.getHeight()+"\n Peso:"+ user.getWeight()+"\nIMC:"+user.getImc());
+        System.out.println("Lista de Usuarios: ");
+        for (int i = 0; i < users.size(); i++){
+        	User user =  users.get(i);
+            System.out.println("Indice:"+ i + "\n "
+            		+ "Nome:"+ user.getName()
+            		+ "\n Idade:"+user.getAge()
+            		+"\n Altura:" +user.getHeight()
+            		+"\n Peso:"+ user.getWeight()
+            		+"\nIMC:"+user.getImc());
         }
-        */
     }
 
     public void UpdateUser(){
         System.out.println("Digite o índice do usuario:");
         int i = Util.getInt();
-        Util.getString();
-
-        if(i>=0 && i< user.size()){
-            User user = user.get(i);
+        if ( i >= 0 && i < users.size()){
+            User user = users.get(i);
             System.out.println("Atualizando informações para: " + user.getName());
             System.out.println("Digite o novo nome (pressione Enter para manter o atual):");
             String newName = Util.getString(); // Lê o novo nome
@@ -72,7 +75,7 @@ public class Admin {
     }
 
     public void DeleteUser(){
-        if(user.isEmpty()){
+        if(users.isEmpty()){
             System.out.println("Não há usuarios a serem deletados");
             return;
         }
@@ -80,8 +83,8 @@ public class Admin {
         int i = Util.getInt();
         Util.getString();
 
-        if(i>=0 && i< user.size()){
-            user.remove(i);
+        if(i>=0 && i< users.size()){
+            users.remove(i);
             System.out.println("Usuario removido.");
         }
         else{
