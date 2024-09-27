@@ -1,5 +1,4 @@
 package br.com.treinotrack.models;
-import br.com.treinotrack.service.Tracker;
 
 public class User {
     private String name; //nome
@@ -14,12 +13,12 @@ public class User {
 		this.age = age;
 		this.height = height;
 		this.weight = weight;
-		this.imc = setIMC();
+		setIMC();
 	}
 
 	// Getters and Setters
 	public float getImc() {return imc;} // pega o imc
-	public void setIMC() {imc = weight / (height * height);}
+	public void setIMC() {this.imc = this.weight / (this.height * this.height);}
 
 	public String getName() {return name;}
 	public void setName(String name) {this.name = name;}
