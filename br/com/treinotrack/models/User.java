@@ -41,6 +41,9 @@ public class User {
 
 	public float getWeight() {return weight;} 
 	public void setWeight(float weight) {this.weight = weight;}
+	
+	public String getSex() {return sex;}
+	public void setSex(String sex) {this.sex = sex;}
 
 }
 

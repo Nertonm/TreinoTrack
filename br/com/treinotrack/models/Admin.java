@@ -63,11 +63,15 @@ public class Admin {
                 user.setAge(newAge); // Atualiza a idade
             }
             System.out.println("Digite a nova altura(pressione Enter para manter o atual):");
-            float HeigthInpult = Util.getFloat();
-            user.setHeight(HeigthInpult);
+            float heigthInpult = Util.getFloat();
+            user.setHeight(heigthInpult);
             System.out.println("Digite  novo peso(pressione Enter para manter o atual):");
-            float WeigthInput = Util.getFloat();
-            user.setWeight(WeigthInput);
+            float weigthInput = Util.getFloat();
+            user.setWeight(weigthInput);
+            System.out.println("Usuário atualizado com sucesso!");
+            System.out.println("Digite o novo sexo(pressione Enter para manter o atual):");
+            String sexInput = Util.getSex();
+            user.setSex(sexInput);
             System.out.println("Usuário atualizado com sucesso!");
         } 
         else 
