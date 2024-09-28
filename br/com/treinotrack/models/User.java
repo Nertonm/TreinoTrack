@@ -25,13 +25,6 @@ public class User {
 		this.sex = "male";
 		setIMC();
 	}
-	public User(){
-		this.name = "Bob";
-		this.age = 18;
-		this.height = 1.70f;
-		this.weight = 65.00f;
-		setIMC();
-	}
 
 	// Getters and Setters
 	public float getImc() {return imc;} // 
