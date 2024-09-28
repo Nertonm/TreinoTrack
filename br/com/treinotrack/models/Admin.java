@@ -1,6 +1,5 @@
 package br.com.treinotrack.models;
 import br.com.treinotrack.service.Util;
-import br.com.treinotrack.models.*;
 import java.util.ArrayList;
 
 public class Admin {
@@ -21,7 +20,13 @@ public class Admin {
         User newUser = new User(name, age, height, weight);
         users.add(newUser);
     }
-
+    
+    //For Debugging
+    public void CreateNewBob() {
+    	User bob = new User();
+    	users.add(bob);
+    }
+    
     public void ReadUserList(){
         if (users == null){
             System.out.println("Não há usuarios");
