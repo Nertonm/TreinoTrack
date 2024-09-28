@@ -15,22 +15,29 @@ public class User {
 		this.weight = weight;
 		setIMC();
 	}
+	public User(){
+		this.name = "Bob";
+		this.age = 18;
+		this.height = 1.70f;
+		this.weight = 65.00f;
+		setIMC();
+	}
 
 	// Getters and Setters
-	public float getImc() {return imc;} // pega o imc
+	public float getImc() {return imc;} // 
 	public void setIMC() {this.imc = this.weight / (this.height * this.height);}
 
 	public String getName() {return name;}
 	public void setName(String name) {this.name = name;}
 
-	public byte getAge() {return age;}// acessa a idade
-	public void setAge(byte age) {this.age = age;} // pega a idade
+	public byte getAge() {return age;}
+	public void setAge(byte age) {this.age = age;} 
 
-	public float getHeight() {return height;} // acessa a altura
-	public void setHeight(float height) {this.height = height;} // pega a altura
+	public float getHeight() {return height;}
+	public void setHeight(float height) {this.height = height;}
 
-	public float getWeight() {return weight;} // acessa o peso
-	public void setWeight(float weight) {this.weight = weight;} // pega o peso
+	public float getWeight() {return weight;} 
+	public void setWeight(float weight) {this.weight = weight;}
 
 }
 
