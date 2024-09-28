@@ -15,7 +15,7 @@ public class Util {
                 return scanner.nextByte();
             }
             catch (InputMismatchException error){
-                System.out.print("Entrada Inválida");
+                System.out.print("Entrada Inválida\n");
                 scanner.next(); // Limpa o Scanner
             }
         }
@@ -27,7 +27,7 @@ public class Util {
                 return scanner.nextFloat();
             }
             catch (InputMismatchException error){
-                System.out.print("Entrada Inválida");
+                System.out.print("Entrada Inválida\n");
                 scanner.next(); // Limpa o Scanner
             }
         }
@@ -39,7 +39,7 @@ public class Util {
                 return scanner.nextInt();
             }
             catch (InputMismatchException error){
-                System.out.print("Entrada Inválida");
+                System.out.print("Entrada Inválida\n");
                 scanner.next(); // Limpa o Scanner
             }
         }
