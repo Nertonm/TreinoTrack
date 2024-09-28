@@ -15,7 +15,7 @@ public class Util {
                 return scanner.nextByte();
             }
             catch (InputMismatchException error){
-                System.out.print("Entrada Inválida\n");
+                System.out.println("Entrada Inválida. Por favor, insira um número válido.");
                 scanner.next(); // Limpa o Scanner
             }
         }
@@ -27,7 +27,8 @@ public class Util {
                 return scanner.nextFloat();
             }
             catch (InputMismatchException error){
-                System.out.print("Entrada Inválida\n");
+                System.out.println("Entrada Inválida. Por favor, insira um número válido.");
+
                 scanner.next(); // Limpa o Scanner
             }
         }
@@ -42,6 +43,17 @@ public class Util {
                 System.out.print("Entrada Inválida\n");
                 scanner.next(); // Limpa o Scanner
             }
+        }
+    }
+    public static String getSex() {
+        String sex = scanner.nextLine().trim().toLowerCase();
+        if (sex.matches("^(masculine|homem|menino|rapaz|garoto|moço|guri|bicho|m)$")) {
+            return "male";
+        } else if (sex.matches("^(feminine|mulher|menina|garota|moca|guria|f)$")) {
+            return "female";
+        } else {
+            System.out.println("");
+            return getSex();
         }
     }
 }

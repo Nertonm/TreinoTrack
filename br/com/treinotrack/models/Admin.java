@@ -9,15 +9,17 @@ public class Admin {
     }
 
     public void CreateNewUser(){
-        System.out.println("Digite o nome do Usuario:");
+        System.out.println("Digite o nome:");
         String name = Util.getString();
-        System.out.println("Digte a idade do Usuario:");
+        System.out.println("Digte a idade:");
         byte age =  Util.getByte();
-        System.out.println("Digite a altura do Usuario:");
+        System.out.println("Digite a altura:");
         float height = Util.getFloat();
-        System.out.println("Digite o peso do Usuario:");
+        System.out.println("Digite o peso:");
         float weight = Util.getFloat();
-        User newUser = new User(name, age, height, weight);
+        System.out.println("Digite o sexo:");
+        String sex = Util.getSex();
+        User newUser = new User(name, age, height, weight, sex);
         users.add(newUser);
     }
     
@@ -61,11 +63,15 @@ public class Admin {
                 user.setAge(newAge); // Atualiza a idade
             }
             System.out.println("Digite a nova altura(pressione Enter para manter o atual):");
-            float HeigthInpult = Util.getFloat();
-            user.setHeight(HeigthInpult);
+            float heigthInpult = Util.getFloat();
+            user.setHeight(heigthInpult);
             System.out.println("Digite  novo peso(pressione Enter para manter o atual):");
-            float WeigthInput = Util.getFloat();
-            user.setWeight(WeigthInput);
+            float weigthInput = Util.getFloat();
+            user.setWeight(weigthInput);
+            System.out.println("Usuário atualizado com sucesso!");
+            System.out.println("Digite o novo sexo(pressione Enter para manter o atual):");
+            String sexInput = Util.getSex();
+            user.setSex(sexInput);
             System.out.println("Usuário atualizado com sucesso!");
         } 
         else 
