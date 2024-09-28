@@ -9,15 +9,17 @@ public class Admin {
     }
 
     public void CreateNewUser(){
-        System.out.println("Digite o nome do Usuario:");
+        System.out.println("Digite o nome:");
         String name = Util.getString();
-        System.out.println("Digte a idade do Usuario:");
+        System.out.println("Digte a idade:");
         byte age =  Util.getByte();
-        System.out.println("Digite a altura do Usuario:");
+        System.out.println("Digite a altura:");
         float height = Util.getFloat();
-        System.out.println("Digite o peso do Usuario:");
+        System.out.println("Digite o peso:");
         float weight = Util.getFloat();
-        User newUser = new User(name, age, height, weight);
+        System.out.println("Digite o sexo:");
+        String sex = Util.getSex();
+        User newUser = new User(name, age, height, weight, sex);
         users.add(newUser);
     }
     

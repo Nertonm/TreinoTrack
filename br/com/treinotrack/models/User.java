@@ -5,14 +5,16 @@ public class User {
     private byte age; // idade em anos
     private float height; // altura em metros
     private float weight; // peso em kg
+    private String sex;
     private float imc; // imc
 
 	// Builder
-	public User(String name, byte age, float height, float weight){
+	public User(String name, byte age, float height, float weight, String sex){
 		this.name = name;
 		this.age = age;
 		this.height = height;
 		this.weight = weight;
+		this.sex = sex;
 		setIMC();
 	}
 	public User(){
@@ -20,6 +22,7 @@ public class User {
 		this.age = 18;
 		this.height = 1.70f;
 		this.weight = 65.00f;
+		this.sex = "male";
 		setIMC();
 	}
 
