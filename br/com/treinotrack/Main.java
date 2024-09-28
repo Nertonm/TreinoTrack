@@ -1,5 +1,4 @@
 package br.com.treinotrack;
-import br.com.treinotrack.service.Util;
 import br.com.treinotrack.models.Admin;
 
 public class Main {
