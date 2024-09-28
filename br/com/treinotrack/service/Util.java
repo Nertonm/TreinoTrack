@@ -28,6 +28,7 @@ public class Util {
             }
             catch (InputMismatchException error){
                 System.out.println("Entrada Inválida. Por favor, insira um número válido.");
+
                 scanner.next(); // Limpa o Scanner
             }
         }

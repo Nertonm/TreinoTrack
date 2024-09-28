@@ -25,6 +25,13 @@ public class User {
 		this.sex = "male";
 		setIMC();
 	}
+	public User(){
+		this.name = "Bob";
+		this.age = 18;
+		this.height = 1.70f;
+		this.weight = 65.00f;
+		setIMC();
+	}
 
 	// Getters and Setters
 	public float getImc() {return imc;} // 
@@ -41,7 +48,6 @@ public class User {
 
 	public float getWeight() {return weight;} 
 	public void setWeight(float weight) {this.weight = weight;}
-	
 	public String getSex() {return sex;}
 	public void setSex(String sex) {this.sex = sex;}
 
