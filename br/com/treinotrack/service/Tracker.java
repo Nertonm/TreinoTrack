@@ -3,7 +3,8 @@ package br.com.treinotrack.service;
 
 public class Tracker {
 	double trackerId;
-	//List<Workout.WorkoutHistory> workoutHistory;
+	List<Workout.WorkoutHistory> workoutHistory;
+	
 
 }
 /*
