@@ -16,6 +16,10 @@ public abstract class Exercise {
 	public void setMET(int MET) {MET = MET;}
 	public User getUser() {return user;}
 	public void setUser(User user) {this.user = user;}
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
 
 
