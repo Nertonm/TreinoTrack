@@ -13,7 +13,7 @@ public abstract class Cardio extends Exercise {
 }
 
 // Classe Treadmil - Esteira
-public class Treadmil extends Cardio {
+abstract class Treadmil extends Cardio {
 	private double speed;
 	
     public Treadmil(double duration, double weight, double speed) {
@@ -27,7 +27,6 @@ public class Treadmil extends Cardio {
         System.out.println("Running on the treadmill for " + getDuration() + " minutes, burning " + getCaloriesBurned() + " calories.");
     }
     
-    @Override
     public double getMET(double speed) {
         if (speed < 4.0) return 3.3; 		// Caminhada leve
         else if (speed < 5.0) return 4.3; 	// Caminhada moderada
@@ -42,7 +41,7 @@ public class Treadmil extends Cardio {
 }
 
 // Classe Hike - Caminhada
-public class Hike extends Cardio {
+class Hike extends Cardio {
     public Hike(double duration, double weight) {
         this.duration = duration;
         this.weight = weight;
@@ -52,7 +51,7 @@ public class Hike extends Cardio {
     public void performExercise() {
         System.out.println("Hiking for " + getDuration() + " minutes, burning " + getCaloriesBurned() + " calories.");
     }
-    
+
     @Override
     public double getMET() {
         return 3.8; // Caminhada leve
@@ -60,7 +59,7 @@ public class Hike extends Cardio {
 }
 
 // Classe Race - Corrida
-public class Race extends Cardio {
+class Race extends Cardio {
     public Race(int duration, double weight) {
         this.duration = duration;
         this.weight = weight;
