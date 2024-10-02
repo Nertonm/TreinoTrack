@@ -45,15 +45,4 @@ public class Util {
             }
         }
     }
-    public static String getSex() {
-        String sex = scanner.nextLine().trim().toLowerCase();
-        if (sex.matches("^(masculine|homem|menino|rapaz|garoto|moço|guri|bicho|m)$")) {
-            return "male";
-        } else if (sex.matches("^(feminine|mulher|menina|garota|moca|guria|f)$")) {
-            return "female";
-        } else {
-            System.out.println("");
-            return getSex();
-        }
-    }
 }
