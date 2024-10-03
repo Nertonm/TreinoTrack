@@ -35,10 +35,9 @@ public class Admin {
             return;
         }
         System.out.println("Lista de Usuarios: ");
-        for (int i = 0; i < users.size(); i++){
-        	User user =  users.get(i);
-            System.out.println("Indice:"+ i + "\n "
-            		+ "Nome:"+ user.getName()
+        for (User user: users){
+        	/* User user =  users.get(i);*/
+            System.out.println("Nome:"+ user.getName()
             		+ "\n Idade:"+user.getAge()
             		+"\n Altura:" +user.getHeight()
             		+"\n Peso:"+ user.getWeight()
