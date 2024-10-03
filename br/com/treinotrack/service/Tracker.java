@@ -1,11 +1,10 @@
 package br.com.treinotrack.service;
+import br.com.treinotrack.models.Workout;
+import java.util.ArrayList;
 
 
 public class Tracker {
-	double trackerId;
-	List<Workout.WorkoutHistory> workoutHistory;
-	
-
+	ArrayList<Workout> workoutHistorys = new ArrayList<Workout>();
 }
 /*
     public static class Goals { }
