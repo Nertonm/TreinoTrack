@@ -82,13 +82,18 @@ public class Admin {
     public void UpdateUser() {
         Scanner scanner = new Scanner(System.in);
         int i = getValidInt(scanner, "Digite o índice do usuário:");
+        scanner.nextLine();
+
         if (i >= 0 && i < users.size()) {
             User user = users.get(i);
             System.out.println("Atualizando informações para: " + user.getName());
+
             System.out.println("Digite o novo nome (pressione Enter para manter o atual):");
             String newName = scanner.nextLine();
-            if (!newName.isEmpty()) 
+            if (!newName.isEmpty()) {
                 user.setName(newName);
+            }
+
             System.out.println("Digite a nova idade (pressione Enter para manter o atual):");
             String ageInput = scanner.nextLine();
             if (!ageInput.isEmpty()) {
