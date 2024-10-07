@@ -1,100 +1,138 @@
 package br.com.treinotrack.models;
-import br.com.treinotrack.service.Util;
+
 import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class Admin {
     ArrayList<User> users = new ArrayList<User>();
     
-    public Admin() {
-    }
+    public Admin() {}
 
-    public void CreateNewUser(){
+    public void CreateNewUser() {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Digite o nome:");
-        String name = Util.getString();
-        System.out.println("Digte a idade:");
-        byte age =  Util.getByte();
-        System.out.println("Digite a altura:");
-        float height = Util.getFloat();
-        System.out.println("Digite o peso:");
-        float weight = Util.getFloat();
+        String name = scanner.nextLine();
+        byte age = getValidByte(scanner, "Digite a idade:");        
+        float height = getValidFloat(scanner, "Digite a altura:");        
+        float weight = getValidFloat(scanner, "Digite o peso:");
         System.out.println("Digite o sexo:");
-        String sex = Util.getSex();
+        String sex = getSex(scanner);
         User newUser = new User(name, age, height, weight, sex);
         users.add(newUser);
     }
-    
-    //For Debugging
-    public void CreateNewBob() {
-    	User bob = new User();
-    	users.add(bob);
-    }
-    
-    public void ReadUserList(){
-        if (users == null){
-            System.out.println("Não há usuarios");
-            return;
-        }
-        System.out.println("Lista de Usuarios: ");
-        for (User user: users){
-        	/* User user =  users.get(i);*/
-            System.out.println("Nome:"+ user.getName()
-            		+ "\n Idade:"+user.getAge()
-            		+"\n Altura:" +user.getHeight()
-            		+"\n Peso:"+ user.getWeight()
-            		+"\nIMC:"+user.getImc());
+
+    private byte getValidByte(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.println(prompt);
+            try {
+                return scanner.nextByte();
+            } catch (InputMismatchException error) {
+                System.out.println("Entrada inválida. Por favor, insira um número válido.");
+                scanner.next(); // Limpa o scanner
+            }
         }
     }
 
-    public void UpdateUser(){
-        System.out.println("Digite o índice do usuario:");
-        int i = Util.getInt();
-        if ( i >= 0 && i < users.size()){
+    private float getValidFloat(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.println(prompt);
+            try {
+                return scanner.nextFloat();
+            } catch (InputMismatchException error) {
+                System.out.println("Entrada inválida. Por favor, insira um número válido.");
+                scanner.next(); // Limpa o scanner
+            }
+        }
+    }
+
+    private String getSex(Scanner scanner) {
+        while (true) {
+            String sex = scanner.next();
+            if (sex.equalsIgnoreCase("masculino") || sex.equalsIgnoreCase("feminino")) {
+                return sex;
+            } else {
+                System.out.println("Entrada inválida. Digite 'masculino' ou 'feminino'.");
+            }
+        }
+    }
+
+    public void CreateNewBob() {
+        User bob = new User();
+        users.add(bob);
+    }
+
+    public void ReadUserList() {
+        if (users.isEmpty()) {
+            System.out.println("Não há usuários.");
+            return;
+        }
+        System.out.println("Lista de Usuários:");
+        for (int i = 0; i < users.size(); i++) {
+            User user = users.get(i);
+            System.out.println("Índice: " + i 
+                + "\nNome: " + user.getName()
+                + "\nIdade: " + user.getAge()
+                + "\nAltura: " + user.getHeight()
+                + "\nPeso: " + user.getWeight()
+                + "\nIMC: " + user.getImc());
+        }
+    }
+
+    public void UpdateUser() {
+        Scanner scanner = new Scanner(System.in);
+        int i = getValidInt(scanner, "Digite o índice do usuário:");
+        if (i >= 0 && i < users.size()) {
             User user = users.get(i);
             System.out.println("Atualizando informações para: " + user.getName());
             System.out.println("Digite o novo nome (pressione Enter para manter o atual):");
-            String newName = Util.getString(); 
+            String newName = scanner.nextLine();
             if (!newName.isEmpty()) 
-                user.setName(newName); // Atualiza o nome se não estiver vazio
+                user.setName(newName);
             System.out.println("Digite a nova idade (pressione Enter para manter o atual):");
-            String ageInput = Util.getString();
+            String ageInput = scanner.nextLine();
             if (!ageInput.isEmpty()) {
-                byte newAge = Byte.parseByte(ageInput); // Converte para byte
-                user.setAge(newAge); // Atualiza a idade
+                try {
+                    byte newAge = Byte.parseByte(ageInput);
+                    user.setAge(newAge);
+                } catch (NumberFormatException e) {
+                    System.out.println("Entrada inválida. Mantendo idade atual.");
+                }
             }
-            System.out.println("Digite a nova altura(pressione Enter para manter o atual):");
-            float heigthInpult = Util.getFloat();
-            user.setHeight(heigthInpult);
-            System.out.println("Digite  novo peso(pressione Enter para manter o atual):");
-            float weigthInput = Util.getFloat();
-            user.setWeight(weigthInput);
+            user.setHeight(getValidFloat(scanner, "Digite a nova altura (pressione Enter para manter o atual):"));
+            user.setWeight(getValidFloat(scanner, "Digite o novo peso (pressione Enter para manter o atual):"));
+            System.out.println("Digite o novo sexo (pressione Enter para manter o atual):");
+            user.setSex(getSex(scanner));
             System.out.println("Usuário atualizado com sucesso!");
-            System.out.println("Digite o novo sexo(pressione Enter para manter o atual):");
-            String sexInput = Util.getSex();
-            user.setSex(sexInput);
-            System.out.println("Usuário atualizado com sucesso!");
-        } 
-        else 
-            System.out.println("Índice inválido!"); // Mensagem de erro
+        } else {
+            System.out.println("Índice inválido!"); 
+        }
     }
 
-    public void DeleteUser(){
-        if(users.isEmpty()){
-            System.out.println("Não há usuarios a serem deletados");
+    public void DeleteUser() {
+        Scanner scanner = new Scanner(System.in);
+        if (users.isEmpty()) {
+            System.out.println("Não há usuários a serem deletados.");
             return;
         }
-        System.out.println("Dgite o indice do usuario a ser deletado:");
-        int index = Util.getInt();
-        Util.getString();
-        if(index >= 0 && index< users.size()){
+        int index = getValidInt(scanner, "Digite o índice do usuário a ser deletado:");
+        if (index >= 0 && index < users.size()) {
             users.remove(index);
-            System.out.println("Usuario removido.");
+            System.out.println("Usuário removido com sucesso.");
+        } else {
+            System.out.println("Índice inválido!");
         }
-        else
-            System.out.println("Indice invalido!");
+    }
+
+    private int getValidInt(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.println(prompt);
+            try {
+                return scanner.nextInt();
+            } catch (InputMismatchException error) {
+                System.out.println("Entrada inválida. Por favor, insira um número válido.");
+                scanner.next(); // Limpa o scanner
+            }
+        }
     }
 }
-
-
-
-
-

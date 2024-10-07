@@ -1,4 +1,5 @@
 package br.com.treinotrack.models;
+import java.util.Scanner;
 
 public class User {
     private String name; //nome
@@ -41,7 +42,6 @@ public class User {
 
 	public float getWeight() {return weight;} 
 	public void setWeight(float weight) {this.weight = weight;}
-	public String getSex() {return sex;}
 	public void setSex(String sex) {this.sex = sex;}
 
 }
