@@ -21,6 +21,7 @@ public class Admin {
         User newUser = new User(name, age, height, weight, sex);
         users.add(newUser);
     }
+<<<<<<< HEAD
 
     private byte getValidByte(Scanner scanner, String prompt) {
         while (true) {
@@ -31,6 +32,28 @@ public class Admin {
                 System.out.println("Entrada inválida. Por favor, insira um número válido.");
                 scanner.next(); // Limpa o scanner
             }
+=======
+    
+    //For Debugging
+    public void CreateNewBob() {
+    	User bob = new User();
+    	users.add(bob);
+    }
+    
+    public void ReadUserList(){
+        if (users == null){
+            System.out.println("Não há usuarios");
+            return;
+        }
+        System.out.println("Lista de Usuarios: ");
+        for (User user: users){
+        	/* User user =  users.get(i);*/
+            System.out.println("Nome:"+ user.getName()
+            		+ "\n Idade:"+user.getAge()
+            		+"\n Altura:" +user.getHeight()
+            		+"\n Peso:"+ user.getWeight()
+            		+"\nIMC:"+user.getImc());
+>>>>>>> 9714d5385af0ba60abdaf1db7481229149ab7585
         }
     }
 
