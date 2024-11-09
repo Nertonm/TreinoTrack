@@ -1,9 +1,9 @@
-package br.com.treinotrack.models.exercises;
+package treinotrack.dados.exercises;
 
 
 public abstract class Strength extends Exercise{
-    private int series;
-    private int repetiçoes;
+    private final int series;
+    private final int repetiçoes;
 
     public Strength(String name, int series, int repeticoes){
         this.setName(name);

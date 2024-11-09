@@ -1,5 +1,5 @@
-package br.com.treinotrack.models.exercises;
-import br.com.treinotrack.models.User;
+package treinotrack.dados.exercises;
+import treinotrack.dados.User;
 
 public abstract class Exercise {
     private String name;

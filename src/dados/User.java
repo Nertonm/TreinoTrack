@@ -1,5 +1,4 @@
-package br.com.treinotrack.models;
-import java.util.Scanner;
+package treinotrack.dados;
 
 public class User {
     private String name; //nome

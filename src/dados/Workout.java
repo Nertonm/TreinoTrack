@@ -1,6 +1,5 @@
-package br.com.treinotrack.models;
-
-import br.com.treinotrack.models.exercises.*;
+package treinotrack.dados;
+import treinotrack.dados.exercises.*;
 import java.time.LocalDate;
 import java.util.List;
 

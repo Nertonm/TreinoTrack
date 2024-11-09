@@ -1,11 +1,11 @@
-package br.com.treinotrack.models;
+package treinotrack.dados;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Admin {
-    private ArrayList<User> users = new ArrayList<User>();
+    private final ArrayList<User> users = new ArrayList<User>();
     
     public Admin() {}
 

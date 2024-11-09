@@ -1,5 +1,5 @@
-package br.com.treinotrack.models.exercises;
-import br.com.treinotrack.models.User;
+package treinotrack.dados.exercises;
+import treinotrack.dados.User;
 
 public abstract class Cardio extends Exercise {
     double duration;
@@ -14,7 +14,7 @@ public abstract class Cardio extends Exercise {
 
 // Classe Treadmil - Esteira
 abstract class Treadmil extends Cardio {
-	private double speed;
+	private final double speed;
 	
     public Treadmil(double duration, double weight, double speed) {
         this.duration = duration;
