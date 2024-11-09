@@ -1,12 +1,11 @@
-package br.com.treinotrack.facades;
-import br.com.treinotrack.models.Admin;
-
+package treinotrack.interfaces;
+import treinotrack.dados.Admin;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AdminFacade {
-    private Admin admin;
-    private Scanner scanner;
+    private final Admin admin;
+    private final Scanner scanner;
 
     public AdminFacade(){
         this.admin = new Admin();
