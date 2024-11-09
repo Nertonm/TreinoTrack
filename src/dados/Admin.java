@@ -5,7 +5,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Admin {
-    ArrayList<User> users = new ArrayList<User>();
+    private ArrayList<User> users = new ArrayList<User>();
     
     public Admin() {}
 

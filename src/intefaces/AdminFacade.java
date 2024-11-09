@@ -15,7 +15,6 @@ public class AdminFacade {
 
     public void start(){
         int option;
-
         do{
             displayMenu();
             option = getValidInt("Escolha uma opção:(1-5)");
