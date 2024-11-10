@@ -1,4 +1,4 @@
-package treinotrack.dados;
+package treinotrack.data;
 
 public class User {
     private String name; //nome

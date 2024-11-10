@@ -1,5 +1,4 @@
-package treinotrack.dados;
-
+package treinotrack.data;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;

@@ -1,33 +1,33 @@
-package treinotrack.dados.exercises;
-import treinotrack.dados.User;
+package treinotrack.data.exercises;
+import treinotrack.data.User;
 
 public abstract class Cardio extends Exercise {
-    double duration;
-    double weight;
-    
-	protected double getWeight() {return this.getUser().getWeight();}
+    protected double duration;
+    protected double weight;
+    private User user;
+    private float CaloriesBurned;
 	public abstract double getMET();
+    public  double getCalsBurned(){
+        return this.getMET() * this.getWeight() * this.getDuration() / 60;
+    };
+
 	public double getDuration() {return this.duration;}
 	public void setDuration(double duration) {this.duration = duration;}
+    public double getWeight() {return user.getWeight();}
 
 }
 
 // Classe Treadmil - Esteira
-abstract class Treadmil extends Cardio {
+class Treadmil extends Cardio {
 	private final double speed;
 	
     public Treadmil(double duration, double weight, double speed) {
         this.duration = duration;
-        this.weight = weight;
         this.speed = speed;
     }
 
     @Override
-    public void performExercise() {
-        System.out.println("Running on the treadmill for " + getDuration() + " minutes, burning " + getCaloriesBurned() + " calories.");
-    }
-    
-    public double getMET(double speed) {
+    public double getMET() {
         if (speed < 4.0) return 3.3; 		// Caminhada leve
         else if (speed < 5.0) return 4.3; 	// Caminhada moderada
         else if (speed < 6.0) return 5.0; 	// Caminhada rápida
@@ -38,6 +38,7 @@ abstract class Treadmil extends Cardio {
         else if (speed < 13.0) return 14.0; // Corrida intensa
         else return 16.0; 					// Corrida muito intensa
     }
+
 }
 
 // Classe Hike - Caminhada
@@ -45,11 +46,6 @@ class Hike extends Cardio {
     public Hike(double duration, double weight) {
         this.duration = duration;
         this.weight = weight;
-    }
-
-    @Override
-    public void performExercise() {
-        System.out.println("Hiking for " + getDuration() + " minutes, burning " + getCaloriesBurned() + " calories.");
     }
 
     @Override
@@ -63,11 +59,6 @@ class Race extends Cardio {
     public Race(int duration, double weight) {
         this.duration = duration;
         this.weight = weight;
-    }
-
-    @Override
-    public void performExercise() {
-        System.out.println("Racing for " + getDuration() + " minutes, burning " + getCaloriesBurned() + " calories.");
     }
     
     @Override
