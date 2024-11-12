@@ -1,25 +1,28 @@
 package br.com.treinotrack.models;
 
-import java.util.ArrayList;
+import br.com.treinotrack.data.UserRepository;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Admin {
-    ArrayList<User> users = new ArrayList<User>();
+    private UserRepository userRepository;
+    private Scanner scanner;
     
-    public Admin() {}
+    public Admin() {
+        this.userRepository = new UserRepository();
+        this.scanner = new Scanner(System.in);
+    }
 
     public void CreateNewUser() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Digite o nome:");
         String name = scanner.nextLine();
-        byte age = getValidByte(scanner, "Digite a idade:");        
-        float height = getValidFloat(scanner, "Digite a altura:");        
-        float weight = getValidFloat(scanner, "Digite o peso:");
+        byte age = getValidByte(scanner,"Digite a idade:");
+        float height = getValidFloat(scanner,"Digite a altura:");
+        float weight = getValidFloat(scanner,"Digite o peso:");
         System.out.println("Digite o sexo:");
         String sex = getSex(scanner);
         User newUser = new User(name, age, height, weight, sex);
-        users.add(newUser);
+        userRepository.addUser(newUser);
     }
 
     private byte getValidByte(Scanner scanner, String prompt) {
@@ -57,19 +60,14 @@ public class Admin {
         }
     }
 
-    public void CreateNewBob() {
-        User bob = new User();
-        users.add(bob);
-    }
-
     public void ReadUserList() {
-        if (users.isEmpty()) {
+        if (userRepository.getUsers().isEmpty()) {
             System.out.println("Não há usuários.");
             return;
         }
         System.out.println("Lista de Usuários:");
-        for (int i = 0; i < users.size(); i++) {
-            User user = users.get(i);
+        for (int i = 0; i < userRepository.getUsers().size(); i++) {
+            User user = userRepository.getUsers().get(i);
             System.out.println("Índice: " + i 
                 + "\nNome: " + user.getName()
                 + "\nIdade: " + user.getAge()
@@ -80,12 +78,9 @@ public class Admin {
     }
 
     public void UpdateUser() {
-        Scanner scanner = new Scanner(System.in);
-        int i = getValidInt(scanner, "Digite o índice do usuário:");
-        scanner.nextLine();
-
-        if (i >= 0 && i < users.size()) {
-            User user = users.get(i);
+        int i = getValidInt(scanner,"Digite o índice do usuário:");
+        if (i >= 0 && i < userRepository.getUsers().size()) {
+            User user = userRepository.getUsers().get(i);
             System.out.println("Atualizando informações para: " + user.getName());
 
             System.out.println("Digite o novo nome (pressione Enter para manter o atual):");
@@ -104,7 +99,7 @@ public class Admin {
                     System.out.println("Entrada inválida. Mantendo idade atual.");
                 }
             }
-            user.setHeight(getValidFloat(scanner, "Digite a nova altura (pressione Enter para manter o atual):"));
+            user.setHeight(getValidFloat(scanner,"Digite a nova altura (pressione Enter para manter o atual):"));
             user.setWeight(getValidFloat(scanner, "Digite o novo peso (pressione Enter para manter o atual):"));
             System.out.println("Digite o novo sexo (pressione Enter para manter o atual):");
             user.setSex(getSex(scanner));
@@ -115,18 +110,21 @@ public class Admin {
     }
 
     public void DeleteUser() {
-        Scanner scanner = new Scanner(System.in);
-        if (users.isEmpty()) {
+        if (userRepository.getUsers().isEmpty()) {
             System.out.println("Não há usuários a serem deletados.");
             return;
         }
         int index = getValidInt(scanner, "Digite o índice do usuário a ser deletado:");
-        if (index >= 0 && index < users.size()) {
-            users.remove(index);
+        if (index >= 0 && index < userRepository.getUsers().size()) {
+            userRepository.getUsers().remove(index);
             System.out.println("Usuário removido com sucesso.");
         } else {
             System.out.println("Índice inválido!");
         }
+    }
+
+    public void saveUsers() {
+        userRepository.saveUsers();
     }
 
     private int getValidInt(Scanner scanner, String prompt) {
