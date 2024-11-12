@@ -29,6 +29,8 @@ public class AdminFacade {
             }
         }
         while(option!=5);
+
+        admin.saveUsers();
     }
 
     private void displayMenu(){
