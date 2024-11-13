@@ -73,7 +73,8 @@ public class Admin {
                 + "\nIdade: " + user.getAge()
                 + "\nAltura: " + user.getHeight()
                 + "\nPeso: " + user.getWeight()
-                + "\nIMC: " + user.getImc());
+                + "\nIMC: " + user.getImc()
+                + "\n");
         }
     }
 
