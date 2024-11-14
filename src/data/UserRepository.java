@@ -1,6 +1,6 @@
-package br.com.treinotrack.data;
+package treinotrack.data;
 
-import br.com.treinotrack.models.User;
+import treinotrack.models.User;
 import java.io.*;
 import java.util.ArrayList;
 

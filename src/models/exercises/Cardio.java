@@ -1,7 +1,6 @@
-package br.com.treinotrack.models.exercises;
-import br.com.treinotrack.models.User;
+package treinotrack.models.exercises;
 
-public abstract class Cardio extends Exercise {
+public abstract class Cardio extends ExerciseAbstract {
     double duration;
     double weight;
     

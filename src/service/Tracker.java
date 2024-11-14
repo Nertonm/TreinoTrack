@@ -1,5 +1,5 @@
-package br.com.treinotrack.service;
-import br.com.treinotrack.models.Workout;
+package treinotrack.service;
+import treinotrack.models.Workout;
 import java.util.ArrayList;
 
 

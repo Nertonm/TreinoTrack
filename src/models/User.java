@@ -1,6 +1,5 @@
-package br.com.treinotrack.models;
+package treinotrack.models;
 import java.io.Serializable;
-import java.util.Scanner;
 
 public class User implements Serializable{
 	private static final long seraialVersionUID = 1L;

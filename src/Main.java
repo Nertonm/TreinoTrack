@@ -1,5 +1,5 @@
-package br.com.treinotrack;
-import br.com.treinotrack.facades.AdminFacade;
+package treinotrack;
+import treinotrack.facades.AdminFacade;
 
 public class Main {
     public static void main(String[] args){

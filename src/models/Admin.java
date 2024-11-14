@@ -1,6 +1,6 @@
-package br.com.treinotrack.models;
+package treinotrack.models;
 
-import br.com.treinotrack.data.UserRepository;
+import treinotrack.data.UserRepository;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
