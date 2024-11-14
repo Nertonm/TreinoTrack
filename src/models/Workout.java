@@ -1,23 +1,41 @@
 package treinotrack.models;
 
-import treinotrack.models.exercises.*;
-import java.time.LocalDate;
-import java.util.List;
+import treinotrack.interfaces.IWorkout;
 
-public class Workout {
-    private LocalDate data;
-    private List<ExerciseAbstract>  workout;
+public class Workout implements IWorkout {
+    private String name;
+    private String description;
 
-    //Builder
-    public Workout(LocalDate data, List<ExerciseAbstract> workout){
-        this.data = data;
-        this.workout = workout;
+    public Workout(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
-    public LocalDate getData() {return data;}
-    public void setData(LocalDate data) {this.data = data;}
+    @Override
+    public String getName() {
+        return name;
+    }
 
-    public List<ExerciseAbstract> getWorkout() {return workout;}
-    public void setWorkout(List<ExerciseAbstract> workout) {this.workout = workout;}
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Workout{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

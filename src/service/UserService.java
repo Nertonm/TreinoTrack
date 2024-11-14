@@ -2,8 +2,8 @@ package treinotrack.service;
 
 import treinotrack.data.UserRepository;
 import treinotrack.models.User;
-
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserService {
@@ -13,6 +13,10 @@ public class UserService {
     public UserService() {
         this.userRepository = new UserRepository();
         this.scanner = new Scanner(System.in);
+    }
+
+    public List<User> getUsers() {
+        return userRepository.getUsers();
     }
 
     public void CreateNewUser() {
