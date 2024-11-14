@@ -20,7 +20,7 @@ public class User implements Serializable{
 	}
 
 	// Getters and Setters
-	public float getImc() {return weight / (height * height);} //
+	public float getImc() { return weight / (height * height); } //
 
 	//nome
 	public String getName() {return name;}
