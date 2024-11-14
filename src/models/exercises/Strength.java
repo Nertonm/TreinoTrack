@@ -1,6 +1,5 @@
 package treinotrack.models.exercises;
 
-
 public abstract class Strength extends ExerciseAbstract {
     private int sets;
     private int reps;

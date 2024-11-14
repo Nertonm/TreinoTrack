@@ -1,5 +1,9 @@
 package treinotrack.models;
+
 import java.io.Serializable;
+import java.util.List;
+import java.util.ArrayList;
+import treinotrack.service.WorkoutService;
 
 public class User implements Serializable{
 	private static final long seraialVersionUID = 1L;
@@ -8,6 +12,7 @@ public class User implements Serializable{
     private float height; // altura em metros
     private float weight; // peso em kg
     private String sex;
+	private List<Workout> workouts;
 
 	// Builder
 	public User(String name, byte age, float height, float weight, String sex){
@@ -16,6 +21,7 @@ public class User implements Serializable{
 		this.height = height;
 		this.weight = weight;
 		this.sex = sex;
+		this.workouts = new ArrayList<>();
 	}
 
 	// Getters and Setters
@@ -38,7 +44,11 @@ public class User implements Serializable{
 	public void setWeight(float weight) {this.weight = weight;}
 
 	//sexo
+	public String getSex() {return sex;}
 	public void setSex(String sex) {this.sex = sex;}
 
+	public void addWorkout(Workout workout) {
+		this.workouts.add(workout);
+	}
 }
 

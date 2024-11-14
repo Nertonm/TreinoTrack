@@ -8,6 +8,7 @@ public abstract class Cardio extends ExerciseAbstract {
 	public abstract double getMET();
 	public double getDuration() {return this.duration;}
 	public void setDuration(double duration) {this.duration = duration;}
+    public double getCaloriesBurned() {return getMET() * getWeight() * getDuration() / 60;}
 
 }
 

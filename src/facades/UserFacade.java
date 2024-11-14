@@ -1,15 +1,15 @@
 package treinotrack.facades;
-import treinotrack.models.Admin;
+import treinotrack.service.UserService;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class AdminFacade {
-    private Admin admin;
+public class UserFacade {
+    private UserService userService;
     private Scanner scanner;
 
-    public AdminFacade(){
-        this.admin = new Admin();
+    public UserFacade(){
+        this.userService = new UserService();
         this.scanner = new Scanner(System.in);
     }
 
@@ -20,17 +20,17 @@ public class AdminFacade {
             displayMenu();
             option = getValidInt("Escolha uma opção:(1-5)");
             switch (option){
-                case 1 -> admin.CreateNewUser();
-                case 2 -> admin.ReadUserList();
-                case 3 -> admin.UpdateUser();
-                case 4 -> admin.DeleteUser();
+                case 1 -> userService.CreateNewUser();
+                case 2 -> userService.ReadUserList();
+                case 3 -> userService.UpdateUser();
+                case 4 -> userService.DeleteUser();
                 case 5 -> System.out.println("Saindo...");
                 default -> System.out.println("Opção invalida");
             }
         }
         while(option!=5);
 
-        admin.saveUsers();
+        userService.saveUsers();
     }
 
     private void displayMenu(){
