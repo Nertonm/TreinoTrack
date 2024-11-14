@@ -1,5 +1,5 @@
-package br.com.treinotrack.facades;
-import br.com.treinotrack.models.Admin;
+package treinotrack.facades;
+import treinotrack.models.Admin;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
