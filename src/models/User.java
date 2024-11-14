@@ -38,7 +38,7 @@ public class User implements Serializable{
 	public void setWeight(float weight) {this.weight = weight;}
 
 	//sexo
+	public String getSex() {return sex;}
 	public void setSex(String sex) {this.sex = sex;}
-
 }
 
