@@ -2,7 +2,6 @@ package treinotrack.data;
 
 import treinotrack.interfaces.IUserRepository;
 import treinotrack.models.User;
-
 import java.io.*;
 import java.util.ArrayList;
 

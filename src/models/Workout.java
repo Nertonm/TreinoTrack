@@ -1,8 +1,13 @@
 package treinotrack.models;
 
-import treinotrack.interfaces.IWorkout;
+import treinotrack.models.exercises.ExerciseAbstract;
 
-public class Workout implements IWorkout {
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class Workout implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private ArrayList<ExerciseAbstract> exercises;
     private String name;
     private String description;
 
@@ -11,24 +16,32 @@ public class Workout implements IWorkout {
         this.description = description;
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public void setName(String name) {
         this.name = name;
     }
 
-    @Override
     public String getDescription() {
         return description;
     }
 
-    @Override
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public ArrayList<ExerciseAbstract> getExercises() {
+        return exercises;
+    }
+
+    public void addExercise(ExerciseAbstract exercise) {
+        this.exercises.add(exercise);
+    }
+
+    public void removeExercise(ExerciseAbstract exercise) {
+        this.exercises.remove(exercise);
     }
 
     @Override
@@ -36,6 +49,7 @@ public class Workout implements IWorkout {
         return "Workout{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", exercises=" + exercises +
                 '}';
     }
 }

@@ -3,21 +3,28 @@ package treinotrack.models.exercises;
 public abstract class Strength extends ExerciseAbstract {
     private int sets;
     private int reps;
+    private double weight;
 
-    public Strength(String name, int sets, int reps){
+    public Strength() {
+        // No-argument constructor
+    }
+
+    public Strength(String name, int sets, int reps, double weight) {
         this.setName(name);
         this.sets = sets;
         this.reps = reps;
+        this.weight = weight;
     }
 
-    public int getSeries(){
+    public int getSets() {
         return sets;
     }
-    public int getRepetiçoes(){
+
+    public int getReps() {
         return reps;
     }
-    public void performExercise() {
-        System.out.println("Performing " + getName() + ": " + sets + " sets of " + reps + " repetitions.");
-    }
 
+    public double getWeight() {
+        return weight;
+    }
 }

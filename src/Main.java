@@ -1,10 +1,10 @@
 package treinotrack;
-import treinotrack.facades.UserFacade;
+import treinotrack.IUconsole.*;
 
 public class Main {
     public static void main(String[] args){
-        UserFacade facade = new UserFacade();
-        facade.start(); // Inicia o menu de gerenciamento
-        facade.close(); // Fecha o scanner ao final da execução
+        IU console = new IU();
+        console.start(); // Inicia o menu de gerenciamento
+        console.close(); // Fecha o scanner ao final da execução
     }
 }
