@@ -1,4 +1,4 @@
-package treinotrack.models.exercises;
+package treinotrack.data.models.exercises;
 
 public class Strength extends ExerciseAbstract {
     private int sets;
@@ -23,5 +23,9 @@ public class Strength extends ExerciseAbstract {
 
     public double getWeight() {
         return weight;
+    }
+    @Override
+    public String toString() {
+        return super.toString() + ", Sets: " + sets + ", Reps: " + reps + ", Weight: " + weight;
     }
 }

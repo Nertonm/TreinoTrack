@@ -1,4 +1,4 @@
-package treinotrack.models.exercises;
+package treinotrack.data.models.exercises;
 
 // Classe Hike - Caminhada
 public class Hike extends Cardio {
@@ -16,5 +16,9 @@ public class Hike extends Cardio {
     @Override
     public double getMET() {
         return 3.8; // Caminhada leve
+    }
+
+    public String toString() {
+        return super.toString() + ", Duration: " + duration;
     }
 }

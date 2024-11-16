@@ -1,26 +1,26 @@
 // IU.java
-package treinotrack.IUconsole;
+package treinotrack.UIconsole;
 
 import treinotrack.facades.ExerciseFacade;
 import treinotrack.facades.UserFacade;
-import treinotrack.models.User;
-import treinotrack.models.exercises.*;
+import treinotrack.data.models.User;
+import treinotrack.data.models.exercises.*;
 import treinotrack.service.ExerciseService;
 import treinotrack.service.UserService;
 import treinotrack.service.WorkoutService;
 import treinotrack.facades.WorkoutFacade;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import treinotrack.models.Workout;
+import treinotrack.data.models.Workout;
 import java.util.List;
 
-public class IU {
+public class UIadmin {
     private final UserFacade userFacade;
     private final WorkoutFacade workoutFacade;
     private final ExerciseFacade exerciseFacade;
     private final Scanner scanner;
 
-    public IU(){
+    public UIadmin(){
         UserService userService = new UserService();
         this.userFacade = new UserFacade(userService);
         WorkoutService workoutService = new WorkoutService();
@@ -44,7 +44,9 @@ public class IU {
         System.out.println("2. Ler Lista de Treinos");
         System.out.println("3. Atualizar Treino");
         System.out.println("4. Deletar Treino");
-        System.out.println("5. Sair");
+        System.out.println("5. Atribuir Treino a Usuário");
+        System.out.println("6. Desatribuir Treino de Usuário");
+        System.out.println("7. Sair");
     }
 
     private void displayExerciseMenu() {
@@ -52,7 +54,8 @@ public class IU {
         System.out.println("1. Adicionar Novo Exercício");
         System.out.println("2. Ler Lista de Exercícios");
         System.out.println("3. Remover Exercício");
-        System.out.println("4. Sair");
+        System.out.println("4. Associar a um Workout");
+        System.out.println("5. Sair");
     }
 
     private void displayMenu(){
@@ -73,10 +76,9 @@ public class IU {
                 case 1 -> startUserManager();
                 case 2 -> {
                     System.out.println("Digite o índice do usuário:");
-                    int index = scanner.nextInt();
+                    int userIndex = scanner.nextInt();
                     scanner.nextLine();
-                    User user = userFacade.readUserByIndex(index);
-                    startWorkoutManager(user);
+                    startWorkoutManager(userIndex);
                 }
                 case 3 -> startExerciseManager();
                 case 4 -> System.out.println("Saindo...");
@@ -289,8 +291,9 @@ public class IU {
             }
         }
     }
-    public void startWorkoutManager(User user) {
+    public void startWorkoutManager(int userIndex) {
         int option;
+        User user = userFacade.readUserByIndex(userIndex);
         do {
             displayWorkoutMenu();
             option = getValidInt("Escolha uma opção:(1-5)");
@@ -299,22 +302,53 @@ public class IU {
                 case 2 -> readWorkouts(user);
                 case 3 -> updateWorkout(user);
                 case 4 -> deleteWorkout(user);
-                case 5 -> System.out.println("Saindo do Gerenciamento de Treinos...");
+                case 5 -> assignWorkout(userIndex);
+                case 6 -> unassignWorkout(userIndex);
+                case 7 -> System.out.println("Saindo do Gerenciamento de Treinos...");
                 default -> System.out.println("Opção inválida");
             }
         } while (option != 5);
+    }
+
+
+    private void assignWorkout(int userIndex) {
+        scanner.nextLine(); // Consume newline
+        System.out.println("Enter workout name:");
+        String workoutName = scanner.nextLine();
+        userFacade.assignWorkoutToUser(userIndex, workoutName);
+        System.out.println("Workout assigned successfully.");
+    }
+
+    private void unassignWorkout(int userIndex) {
+        scanner.nextLine(); // Consume newline
+        System.out.println("Enter workout name:");
+        String workoutName = scanner.nextLine();
+        userFacade.unassignWorkoutFromUser(userIndex, workoutName);
+        System.out.println("Workout unassigned successfully.");
+    }
+
+    public void addExerciseToWorkout() {
+        System.out.println("Enter the workout index:");
+        int workoutIndex = scanner.nextInt();
+        System.out.println("Enter the exercise index:");
+        int exerciseIndex = scanner.nextInt();
+        Workout workout = workoutFacade.readWorkoutByIndex(workoutIndex);
+        ExerciseAbstract exercise= exerciseFacade.getExerciseByIndex(exerciseIndex);
+        workoutFacade.addExerciseToWorkout( workoutIndex, exercise);
+        System.out.println("Exercise assigned to workout successfully.");
     }
 
     public void startExerciseManager() {
         int option;
         do {
             displayExerciseMenu();
-            option = getValidInt("Escolha uma opção:(1-4)");
+            option = getValidInt("Escolha uma opção:(1-5)");
             switch (option) {
                 case 1 -> addNewExercise();
                 case 2 -> readExercises();
                 case 3 -> removeExercise();
-                case 4 -> System.out.println("Saindo do Gerenciamento de Exercícios...");
+                case 4 -> addExerciseToWorkout();
+                case 5 -> System.out.println("Saindo do Gerenciamento de Exercícios...");
                 default -> System.out.println("Opção inválida");
             }
         } while (option != 4);
@@ -399,34 +433,31 @@ public class IU {
         System.out.println("Digite a descrição do exercício:");
         String description = scanner.nextLine();
 
-        ExerciseAbstract exercise;
         switch (type) {
             case "Treadmil" -> {
                 double speed = getValidDouble(scanner, "Digite a velocidade:");
                 double duration = getValidDouble(scanner, "Digite a duração:");
-                exercise = new Treadmil(duration, speed, name, description);
+                exerciseFacade.newTreadmil(name, description, duration, speed);
             }
             case "Hike" -> {
                 double duration = getValidDouble(scanner, "Digite a duração:");
-                exercise = new Hike(duration, name, description);
+                exerciseFacade.newHike(name, description, duration);
             }
             case "Race" -> {
                 double duration = getValidDouble(scanner, "Digite a duração:");
-                exercise = new Race(duration, name, description);
+                exerciseFacade.newRace(name, description,duration);
             }
             case "Strength" -> {
                 int sets = getValidInt("Digite o número de séries:");
                 int reps = getValidInt("Digite o número de repetições:");
                 float weight = getValidFloat(scanner, "Digite o peso:");
-                exercise = new Strength(sets, reps, weight, name, description);
+                exerciseFacade.newStrength(name, description, sets, reps, weight);
             }
             default -> {
                 System.out.println("Tipo de exercício inválido.");
                 return;
             }
         }
-
-        exerciseFacade.addExercise(exercise);
         System.out.println("Exercício adicionado com sucesso!");
     }
 

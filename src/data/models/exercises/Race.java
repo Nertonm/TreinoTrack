@@ -1,4 +1,4 @@
-package treinotrack.models.exercises;
+package treinotrack.data.models.exercises;
 
 public class Race extends Cardio {
     public Race(double duration, String name, String description) {
@@ -15,5 +15,9 @@ public class Race extends Cardio {
     @Override
     public double getMET() {
         return 12.5; // Intense running
+    }
+
+    public String toString() {
+        return super.toString() + ", Duration: " + duration;
     }
 }

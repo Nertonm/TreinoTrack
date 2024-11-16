@@ -1,6 +1,6 @@
 package treinotrack.interfaces;
 
-import treinotrack.models.Workout;
+import treinotrack.data.models.Workout;
 import java.util.List;
 
 public interface IWorkoutRepository {

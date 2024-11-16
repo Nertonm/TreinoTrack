@@ -1,10 +1,8 @@
 package treinotrack;
 
-import treinotrack.IUconsole.IU;
-import treinotrack.IUconsole.IUuser;
+import treinotrack.UIconsole.UIadmin;
+import treinotrack.UIconsole.UIuser;
 import treinotrack.facades.WorkoutFacade;
-import treinotrack.models.User;
-import treinotrack.models.Workout;
 import treinotrack.service.WorkoutService;
 
 import java.util.Scanner;
@@ -20,14 +18,14 @@ public class Main {
 
         if (role.equalsIgnoreCase("admin")) {
             System.out.println("Admin access granted.");
-            IU console =  new IU();
+            UIadmin console =  new UIadmin();
             console.start();
             console.close();
         } else if (role.equalsIgnoreCase("user")) {
             System.out.println("Enter your Index:");
             int index = scanner.nextInt();
-            IUuser console = new IUuser(workoutFacade,index);
-            console.showUserWorkouts();
+            UIuser console = new UIuser(workoutFacade,index);
+            console.showUserWorkouts(index);
         } else {
             System.out.println("Invalid role. Exiting.");
         }

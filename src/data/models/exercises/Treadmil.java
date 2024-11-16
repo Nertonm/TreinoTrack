@@ -1,4 +1,4 @@
-package treinotrack.models.exercises;
+package treinotrack.data.models.exercises;
 
 public class Treadmil extends Cardio {
     private double speed;
@@ -30,5 +30,10 @@ public class Treadmil extends Cardio {
         else if (speed < 12.0) return 13.0; // Corrida muito rápida
         else if (speed < 13.0) return 14.0; // Corrida intensa
         else return 16.0;                   // Corrida muito intensa
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Speed: " + speed + ", Duration: " + duration;
     }
 }

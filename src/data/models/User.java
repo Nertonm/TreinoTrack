@@ -1,9 +1,8 @@
-package treinotrack.models;
+package treinotrack.data.models;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
-import treinotrack.service.WorkoutService;
 
 public class User implements Serializable{
 	private static final long seraialVersionUID = 1L;

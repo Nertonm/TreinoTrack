@@ -1,6 +1,6 @@
 package treinotrack.facades;
 
-import treinotrack.models.User;
+import treinotrack.data.models.User;
 import treinotrack.service.UserService;
 
 import java.util.List;
@@ -14,6 +14,7 @@ public class UserFacade {
         this.userService = userService;
     }
 
+
     public User readUserByIndex(int index) {
         try {
             User user = userService.getUserByIndex(index);
@@ -23,6 +24,18 @@ public class UserFacade {
             logger.severe("Error reading user: " + e.getMessage());
             throw e;
         }
+    }
+    public void assignWorkoutToUser(int userIndex, String workoutName) {
+        userService.assignWorkoutToUser(userIndex, workoutName);
+    }
+
+    public void unassignWorkoutFromUser(int userIndex, String workoutName) {
+        userService.unassignWorkoutFromUser(userIndex, workoutName);
+    }
+
+    public List<String> getUserWorkouts(int userIndex) {
+        User user = userService.getUserByIndex(userIndex);
+        return user.getWorkouts();
     }
 
     public void createUser(String name, byte age, float height, float weight, String sex) {

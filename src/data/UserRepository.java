@@ -1,7 +1,7 @@
 // UserRepository.java
 package treinotrack.data;
 
-import treinotrack.models.User;
+import treinotrack.data.models.User;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +43,33 @@ public class UserRepository {
             saveUsers();
         }
     }
+    public void assignWorkoutToUser(int userIndex, String workoutName) {
+        if (userIndex >= 0 && userIndex < users.size()) {
+            User user = users.get(userIndex);
+            user.getWorkouts().add(workoutName);
+            saveUsers();
+            logger.info("Workout assigned successfully to user at index " + userIndex);
+        } else {
+            logger.severe("Invalid index for assigning workout: " + userIndex);
+            throw new IndexOutOfBoundsException("Índice inválido para atribuir treino.");
+        }
+    }
+
+    public void unassignWorkoutFromUser(int userIndex, String workoutName) {
+        if (userIndex >= 0 && userIndex < users.size()) {
+            User user = users.get(userIndex);
+            if (user.getWorkouts().remove(workoutName)) {
+                saveUsers();
+                logger.info("Workout unassigned successfully from user at index " + userIndex);
+            } else {
+                logger.warning("Workout not found for user at index " + userIndex);
+            }
+        } else {
+            logger.severe("Invalid index for unassigning workout: " + userIndex);
+            throw new IndexOutOfBoundsException("Índice inválido para desatribuir treino.");
+        }
+    }
+
     public void saveUsers() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, false))) {
             writer.write("[");

@@ -1,4 +1,4 @@
-package treinotrack.models.exercises;
+package treinotrack.data.models.exercises;
 
 public abstract class Cardio extends ExerciseAbstract {
     double duration;

@@ -1,7 +1,7 @@
 // ExerciseRepository.java
 package treinotrack.data;
 
-import treinotrack.models.exercises.*;
+import treinotrack.data.models.exercises.*;
 
 
 import java.io.*;

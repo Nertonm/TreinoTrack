@@ -2,9 +2,9 @@
 package treinotrack.service;
 
 import treinotrack.data.WorkoutRepository;
-import treinotrack.models.Workout;
-import treinotrack.models.User;
-import treinotrack.models.exercises.ExerciseAbstract;
+import treinotrack.data.models.Workout;
+import treinotrack.data.models.User;
+import treinotrack.data.models.exercises.ExerciseAbstract;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -62,7 +62,17 @@ public class WorkoutService {
 		}
 	}
 
-	public void addExerciseToWorkout(User user, int workoutIndex, ExerciseAbstract exercise) {
+	public Workout readWorkoutByIndex(int index) {
+		List<Workout> workouts = workoutRepository.getWorkouts();
+		if (index >= 0 && index < workouts.size()) {
+			return workouts.get(index);
+		} else {
+			throw new IndexOutOfBoundsException("Invalid workout index");
+		}
+	}
+
+
+	public void addExerciseToWorkout( int workoutIndex, ExerciseAbstract exercise) {
 		List<Workout> workouts = workoutRepository.getWorkouts();
 		if (workoutIndex >= 0 && workoutIndex < workouts.size()) {
 			Workout workout = workouts.get(workoutIndex);

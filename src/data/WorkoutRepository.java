@@ -2,9 +2,9 @@
 package treinotrack.data;
 
 import treinotrack.interfaces.IWorkoutRepository;
-import treinotrack.models.Workout;
-import treinotrack.models.exercises.ExerciseAbstract;
-import treinotrack.models.exercises.*;
+import treinotrack.data.models.Workout;
+import treinotrack.data.models.exercises.ExerciseAbstract;
+import treinotrack.data.models.exercises.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;

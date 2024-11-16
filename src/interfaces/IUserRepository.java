@@ -1,6 +1,6 @@
 package treinotrack.interfaces;
 
-import treinotrack.models.User;
+import treinotrack.data.models.User;
 import java.util.List;
 
 public interface IUserRepository {

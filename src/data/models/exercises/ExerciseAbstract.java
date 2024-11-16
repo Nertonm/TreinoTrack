@@ -1,5 +1,4 @@
-package treinotrack.models.exercises;
-import treinotrack.models.User;
+package treinotrack.data.models.exercises;
 
 public abstract class ExerciseAbstract {
     private String name;
@@ -16,6 +15,9 @@ public abstract class ExerciseAbstract {
    // public abstract void performExercise();
     public void setName(String name) {
         this.name = name;
+    }
+    public String toString() {
+        return "Name: " + name + ", Description: " + description;
     }
 }
 

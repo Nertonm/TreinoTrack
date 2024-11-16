@@ -1,9 +1,9 @@
 // WorkoutFacade.java
 package treinotrack.facades;
 
-import treinotrack.models.Workout;
-import treinotrack.models.User;
-import treinotrack.models.exercises.ExerciseAbstract;
+import treinotrack.data.models.Workout;
+import treinotrack.data.models.User;
+import treinotrack.data.models.exercises.ExerciseAbstract;
 import treinotrack.service.WorkoutService;
 
 import java.util.List;
@@ -65,12 +65,15 @@ public class WorkoutFacade {
         }
     }
 
-    public void addExerciseToWorkout(User user, int workoutIndex, ExerciseAbstract exercise) {
+    public void addExerciseToWorkout( int workoutIndex, ExerciseAbstract exercise) {
         try {
-            workoutService.addExerciseToWorkout(user, workoutIndex, exercise);
+            workoutService.addExerciseToWorkout( workoutIndex, exercise);
             logger.info("Exercise added to workout successfully.");
         } catch (Exception e) {
             logger.severe("Error adding exercise to workout: " + e.getMessage());
         }
+    }
+    public Workout readWorkoutByIndex(int index) {
+        return workoutService.readWorkoutByIndex(index);
     }
 }
