@@ -1,19 +1,16 @@
 package treinotrack.models.exercises;
 
-public abstract class Strength extends ExerciseAbstract {
+public class Strength extends ExerciseAbstract {
     private int sets;
     private int reps;
-    private double weight;
+    private float weight;
 
-    public Strength() {
-        // No-argument constructor
-    }
-
-    public Strength(String name, int sets, int reps, double weight) {
-        this.setName(name);
+    public Strength(int sets, int reps, float weight, String name, String description) {
         this.sets = sets;
         this.reps = reps;
         this.weight = weight;
+        super.setName(name);
+        super.setDescription(description);
     }
 
     public int getSets() {

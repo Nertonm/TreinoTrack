@@ -1,23 +1,91 @@
+// IU.java
 package treinotrack.IUconsole;
 
+import treinotrack.facades.ExerciseFacade;
 import treinotrack.facades.UserFacade;
 import treinotrack.models.User;
+import treinotrack.models.exercises.*;
+import treinotrack.service.ExerciseService;
 import treinotrack.service.UserService;
-
+import treinotrack.service.WorkoutService;
+import treinotrack.facades.WorkoutFacade;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import treinotrack.models.Workout;
+import java.util.List;
 
 public class IU {
     private final UserFacade userFacade;
+    private final WorkoutFacade workoutFacade;
+    private final ExerciseFacade exerciseFacade;
     private final Scanner scanner;
 
     public IU(){
         UserService userService = new UserService();
         this.userFacade = new UserFacade(userService);
+        WorkoutService workoutService = new WorkoutService();
+        this.workoutFacade = new WorkoutFacade(workoutService);
+        ExerciseService exerciseService = new ExerciseService();
+        this.exerciseFacade = new ExerciseFacade(exerciseService);
         this.scanner = new Scanner(System.in);
     }
 
-    public void start(){
+    private void displayMainMenu() {
+        System.out.println("\n--- Menu Principal ---");
+        System.out.println("1. Gerenciar Usuários");
+        System.out.println("2. Gerenciar Treinos");
+        System.out.println("3. Gerenciar Exercícios");
+        System.out.println("4. Sair");
+    }
+
+    private void displayWorkoutMenu() {
+        System.out.println("\n--- Menu de Gerenciamento de Treinos ---");
+        System.out.println("1. Criar Novo Treino");
+        System.out.println("2. Ler Lista de Treinos");
+        System.out.println("3. Atualizar Treino");
+        System.out.println("4. Deletar Treino");
+        System.out.println("5. Sair");
+    }
+
+    private void displayExerciseMenu() {
+        System.out.println("\n--- Menu de Gerenciamento de Exercícios ---");
+        System.out.println("1. Adicionar Novo Exercício");
+        System.out.println("2. Ler Lista de Exercícios");
+        System.out.println("3. Remover Exercício");
+        System.out.println("4. Sair");
+    }
+
+    private void displayMenu(){
+        System.out.println("\n--- Menu de Gerenciamento de Usuários ---");
+        System.out.println("1. Criar Novo Usuário");
+        System.out.println("2. Ler Lista de Usuários");
+        System.out.println("3. Atualizar Usuário");
+        System.out.println("4. Deletar Usuário");
+        System.out.println("5. Sair");
+    }
+
+    public void start() {
+        int option;
+        do {
+            displayMainMenu();
+            option = getValidInt("Escolha uma opção:(1-4)");
+            switch (option) {
+                case 1 -> startUserManager();
+                case 2 -> {
+                    System.out.println("Digite o índice do usuário:");
+                    int index = scanner.nextInt();
+                    scanner.nextLine();
+                    User user = userFacade.readUserByIndex(index);
+                    startWorkoutManager(user);
+                }
+                case 3 -> startExerciseManager();
+                case 4 -> System.out.println("Saindo...");
+                default -> System.out.println("Opção inválida");
+            }
+        } while (option != 4);
+    }
+
+    public void startUserManager(){
         int option;
         do{
             displayMenu();
@@ -53,9 +121,29 @@ public class IU {
                     String sex = getSex(scanner);
                     userFacade.createUser(name, age, height, weight, sex);
                 }
-                case 2 -> userFacade.readUsers();
+                case 2 -> {
+                    userFacade.readUsers();
+                    System.out.println("Lista de Usuários:");
+                    for (int i = 0; i < userFacade.getUsers().size(); i++) {
+                        User user = userFacade.getUsers().get(i);
+                        System.out.println("\nÍndice: " + i
+                                + "\nNome: " + user.getName()
+                                + "\nIdade: " + user.getAge()
+                                + "\nAltura: " + user.getHeight()
+                                + "\nPeso: " + user.getWeight()
+                                + "\nIMC: " + user.getImc()
+                                + "\nSexo:" + user.getSex()
+                        );
+                    }
+                }
                 case 3 -> {
                     int i = getValidInt("Digite o índice do usuário:");
+                    User user = userFacade.readUserByIndex(i);
+                    String newName = user.getName();
+                    byte newAge = user.getAge();
+                    float newHeight = user.getHeight();
+                    float newWeight = user.getWeight();
+                    String newSex = user.getSex();
                     if (i >= 0 && i < userFacade.getUsers().size()) {
                         while (true) {
                             System.out.println("Selecione o campo que deseja alterar:");
@@ -65,22 +153,17 @@ public class IU {
                             System.out.println("4. Peso");
                             System.out.println("5. Sexo");
                             System.out.println("6. Sair");
+
                             int choice = getValidInt("Digite sua escolha:");
-                            User user = userFacade.readUserByIndex(i);
-                            String newName = user.getName();
-                            byte newAge = user.getAge();
-                            float newHeight = user.getHeight();
-                            float newWeight = user.getWeight();
-                            String newSex = user.getSex();
                             switch (choice) {
                                 case 1 -> {
                                     System.out.println("Digite o novo nome:");
-                                    scanner.nextLine();
+                                    scanner.nextLine(); // Clear the buffer
                                     newName = scanner.nextLine();
                                 }
                                 case 2 -> {
                                     System.out.println("Digite a nova idade:");
-                                    scanner.nextLine();
+                                    scanner.nextLine(); // Clear the buffer
                                     String ageInput = scanner.nextLine();
                                     if (!ageInput.isEmpty()) {
                                         try {
@@ -113,15 +196,18 @@ public class IU {
                                 }
                                 case 5 -> {
                                     System.out.println("Digite o novo sexo:");
-                                    scanner.nextLine();
+                                    scanner.nextLine(); // Clear the buffer
                                     newSex = getSex(scanner);
                                 }
                                 case 6 -> {
                                     userFacade.updateUser(i, newName, newAge, newHeight, newWeight, newSex);
                                     System.out.println("Usuário atualizado com sucesso!");
-                                    return;
+                                    break;
                                 }
                                 default -> System.out.println("Escolha inválida. Tente novamente.");
+                            }
+                            if (choice == 6) {
+                                break;
                             }
                         }
                     } else {
@@ -141,14 +227,6 @@ public class IU {
         userFacade.saveUsers();
     }
 
-    private void displayMenu(){
-        System.out.println("\n--- Menu de Gerenciamento de Usuários ---");
-        System.out.println("1. Criar Novo Usuário");
-        System.out.println("2. Ler Lista de Usuários");
-        System.out.println("3. Atualizar Usuário");
-        System.out.println("4. Deletar Usuário");
-        System.out.println("5. Sair");
-    }
 
     private int getValidInt(String prompt) {
         while (true) {
@@ -189,6 +267,17 @@ public class IU {
             }
         }
     }
+    private double getValidDouble(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.println(prompt);
+            try {
+                return scanner.nextDouble();
+            } catch (InputMismatchException error) {
+                System.out.println("Entrada inválida. Por favor, insira um número válido.");
+                scanner.next();
+            }
+        }
+    }
 
     private String getSex(Scanner scanner) {
         while (true) {
@@ -200,4 +289,171 @@ public class IU {
             }
         }
     }
+    public void startWorkoutManager(User user) {
+        int option;
+        do {
+            displayWorkoutMenu();
+            option = getValidInt("Escolha uma opção:(1-5)");
+            switch (option) {
+                case 1 -> createWorkout(user);
+                case 2 -> readWorkouts(user);
+                case 3 -> updateWorkout(user);
+                case 4 -> deleteWorkout(user);
+                case 5 -> System.out.println("Saindo do Gerenciamento de Treinos...");
+                default -> System.out.println("Opção inválida");
+            }
+        } while (option != 5);
+    }
+
+    public void startExerciseManager() {
+        int option;
+        do {
+            displayExerciseMenu();
+            option = getValidInt("Escolha uma opção:(1-4)");
+            switch (option) {
+                case 1 -> addNewExercise();
+                case 2 -> readExercises();
+                case 3 -> removeExercise();
+                case 4 -> System.out.println("Saindo do Gerenciamento de Exercícios...");
+                default -> System.out.println("Opção inválida");
+            }
+        } while (option != 4);
+    }
+    private void createWorkout(User user) {
+        String name;
+        do {
+            System.out.println("Digite o nome do treino:");
+            name = scanner.nextLine();
+            if (name.isEmpty()) {
+                System.out.println("Nome do treino não pode ser vazio. Por favor, insira um nome válido.");
+            }
+        } while (name.isEmpty());
+
+        String description;
+        do {
+            System.out.println("Digite a descrição do treino:");
+            description = scanner.nextLine();
+            if (description.isEmpty()) {
+                System.out.println("Descrição do treino não pode ser vazia. Por favor, insira uma descrição válida.");
+            }
+        } while (description.isEmpty());
+
+        workoutFacade.createWorkout(user, name, description);
+        System.out.println("Treino criado com sucesso!");
+    }
+
+    private void readWorkouts(User user) {
+        List<Workout> workouts = workoutFacade.loadWorkouts(user);
+        System.out.println("Lista de Treinos:");
+        for (int i = 0; i < workouts.size(); i++) {
+            Workout workout = workouts.get(i);
+            System.out.println("\nÍndice: " + i
+                    + "\nNome: " + workout.getName()
+                    + "\nDescrição: " + workout.getDescription());
+        }
+    }
+
+    private void updateWorkout(User user) {
+        readWorkouts(user);
+        int index = getValidInt("Digite o índice do treino a ser atualizado:");
+        List<Workout> workouts = workoutFacade.loadWorkouts(user);
+        if (index >= 0 && index < workouts.size()) {
+            Workout workout = workouts.get(index);
+            System.out.println("Digite o novo nome do treino (ou pressione Enter para manter o atual):");
+            String newName = scanner.nextLine();
+            if (!newName.isEmpty()) {
+                workout.setName(newName);
+            }
+            System.out.println("Digite a nova descrição do treino (ou pressione Enter para manter a atual):");
+            String newDescription = scanner.nextLine();
+            if (!newDescription.isEmpty()) {
+                workout.setDescription(newDescription);
+            }
+            workoutFacade.updateWorkout(user, index, newName, newDescription);
+            System.out.println("Treino atualizado com sucesso!");
+        } else {
+            System.out.println("Índice inválido.");
+        }
+    }
+
+    private void deleteWorkout(User user) {
+        readWorkouts(user);
+        int index = getValidInt("Digite o índice do treino a ser deletado:");
+        List<Workout> workouts = workoutFacade.loadWorkouts(user);
+        if (index >= 0 && index < workouts.size()) {
+            workoutFacade.deleteWorkout(user, index);
+            System.out.println("Treino deletado com sucesso!");
+        } else {
+            System.out.println("Índice inválido.");
+        }
+    }
+
+    private void addNewExercise() {
+        System.out.println("Digite o tipo de exercício (Treadmil, Hike, Race, Strength):");
+        String type = scanner.next();
+        scanner.nextLine(); // Clear the buffer
+
+        System.out.println("Digite o nome do exercício:");
+        String name = scanner.nextLine();
+
+        System.out.println("Digite a descrição do exercício:");
+        String description = scanner.nextLine();
+
+        ExerciseAbstract exercise;
+        switch (type) {
+            case "Treadmil" -> {
+                double speed = getValidDouble(scanner, "Digite a velocidade:");
+                double duration = getValidDouble(scanner, "Digite a duração:");
+                exercise = new Treadmil(duration, speed, name, description);
+            }
+            case "Hike" -> {
+                double duration = getValidDouble(scanner, "Digite a duração:");
+                exercise = new Hike(duration, name, description);
+            }
+            case "Race" -> {
+                double duration = getValidDouble(scanner, "Digite a duração:");
+                exercise = new Race(duration, name, description);
+            }
+            case "Strength" -> {
+                int sets = getValidInt("Digite o número de séries:");
+                int reps = getValidInt("Digite o número de repetições:");
+                float weight = getValidFloat(scanner, "Digite o peso:");
+                exercise = new Strength(sets, reps, weight, name, description);
+            }
+            default -> {
+                System.out.println("Tipo de exercício inválido.");
+                return;
+            }
+        }
+
+        exerciseFacade.addExercise(exercise);
+        System.out.println("Exercício adicionado com sucesso!");
+    }
+
+    private void readExercises() {
+        List<ExerciseAbstract> exercises = exerciseFacade.getExercises();
+        System.out.println("Lista de Exercícios:");
+        for (int i = 0; i < exercises.size(); i++) {
+            ExerciseAbstract exercise = exercises.get(i);
+            System.out.println("\nÍndice: " + i
+                    + "\nTipo: " + exercise.getClass().getSimpleName()
+                    + "\nNome: " + exercise.getName()
+                    + "\nDescrição: " + exercise.getDescription());
+        }
+    }
+
+    private void removeExercise() {
+        readExercises();
+        int index = getValidInt("Digite o índice do exercício a ser removido:");
+        List<ExerciseAbstract> exercises = exerciseFacade.getExercises();
+        if (index >= 0 && index < exercises.size()) {
+            ExerciseAbstract exercise = exercises.get(index);
+            exerciseFacade.removeExercise(exercise);
+            System.out.println("Exercício removido com sucesso!");
+        } else {
+            System.out.println("Índice inválido.");
+        }
+    }
+
+
 }

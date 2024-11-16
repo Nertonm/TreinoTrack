@@ -2,9 +2,10 @@ package treinotrack.models.exercises;
 
 // Classe Hike - Caminhada
 public class Hike extends Cardio {
-    public Hike(double duration, double weight) {
+    public Hike(double duration, String name, String description) {
         this.duration = duration;
-        this.weight = weight;
+        super.setName(name);
+        super.setDescription(description);
     }
 
    /* @Override

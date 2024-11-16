@@ -3,10 +3,11 @@ package treinotrack.models.exercises;
 public class Treadmil extends Cardio {
     private double speed;
 
-    public Treadmil(double duration, double weight, double speed) {
+    public Treadmil(double duration, double speed, String name, String description) {
         this.duration = duration;
-        this.weight = weight;
         this.speed = speed;
+        super.setName(name);
+        super.setDescription(description);
     }
 
     /*@Override
@@ -14,6 +15,10 @@ public class Treadmil extends Cardio {
         System.out.println("Running on the treadmill for " + getDuration() + " minutes, burning " + getCaloriesBurned() + " calories.");
     }
 */
+    public double getSpeed() {
+        return speed;
+    }
+
     @Override
     public double getMET() {
         if (speed < 4.0) return 3.3;        // Caminhada leve

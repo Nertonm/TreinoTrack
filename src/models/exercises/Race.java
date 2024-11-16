@@ -1,9 +1,10 @@
 package treinotrack.models.exercises;
 
 public class Race extends Cardio {
-    public Race(double duration, double weight) {
+    public Race(double duration, String name, String description) {
         this.duration = duration;
-        this.weight = weight;
+        super.setName(name);
+        super.setDescription(description);
     }
 
     /*@Override

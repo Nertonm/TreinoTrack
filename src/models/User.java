@@ -12,7 +12,7 @@ public class User implements Serializable{
     private float height; // altura em metros
     private float weight; // peso em kg
     private String sex;
-	private List<Workout> workouts;
+	private List<String> workoutsNamePath;
 
 	// Builder
 	public User(String name, byte age, float height, float weight, String sex){
@@ -21,7 +21,7 @@ public class User implements Serializable{
 		this.height = height;
 		this.weight = weight;
 		this.sex = sex;
-		this.workouts = new ArrayList<>();
+		this.workoutsNamePath = new ArrayList<>();
 	}
 
 	// Getters and Setters
@@ -47,8 +47,14 @@ public class User implements Serializable{
 	public String getSex() {return sex;}
 	public void setSex(String sex) {this.sex = sex;}
 
-	public void addWorkout(Workout workout) {
-		this.workouts.add(workout);
+	public List<String> getWorkouts() {
+		return this.workoutsNamePath;
+	}
+	public void setWorkoutsNamePath(List<String> workoutsNamePath) {
+		this.workoutsNamePath = workoutsNamePath;
+	}
+	public void addWorkout(String workoutNamePath) {
+		this.workoutsNamePath.add(workoutNamePath);
 	}
 }
 

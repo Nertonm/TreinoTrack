@@ -5,14 +5,14 @@ import treinotrack.models.User;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class UserService {
     private UserRepository userRepository;
-    private Scanner scanner;
-    
+    private static final Logger logger = Logger.getLogger(UserService.class.getName());
+
     public UserService() {
         this.userRepository = new UserRepository();
-        this.scanner = new Scanner(System.in);
     }
 
     public List<User> getUsers() {
@@ -59,20 +59,18 @@ public class UserService {
         return userRepository.getUsers();
     }
 
-    public void updateUser(int index, String name, byte age, float height, float weight, String sex) {
+    public void updateUser(int index, User updatedUser) {
         List<User> users = userRepository.getUsers();
         if (index >= 0 && index < users.size()) {
-            User user = users.get(index);
-            user.setName(name);
-            user.setAge(age);
-            user.setHeight(height);
-            user.setWeight(weight);
-            user.setSex(sex);
-            userRepository.saveUsers(users);
+            users.set(index, updatedUser);
+            userRepository.saveUsers(); // Save the updated list of users
+            logger.info("User updated successfully at index " + index);
         } else {
-            throw new IndexOutOfBoundsException("Invalid user index");
+            logger.severe("Invalid index for updating user: " + index);
+            throw new IndexOutOfBoundsException("Índice inválido para atualização de usuário.");
         }
     }
+
     public User getUserByIndex(int index) {
         List<User> users = userRepository.getUsers();
         if (index >= 0 && index < users.size()) {
@@ -100,7 +98,7 @@ public class UserService {
         List<User> users = userRepository.getUsers();
         if (index >= 0 && index < users.size()) {
             users.remove(index);
-            userRepository.saveUsers(users);
+            userRepository.saveUsers();
         } else {
             throw new IndexOutOfBoundsException("Invalid user index");
         }

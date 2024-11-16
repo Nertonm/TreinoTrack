@@ -3,9 +3,7 @@ package treinotrack.facades;
 import treinotrack.models.User;
 import treinotrack.service.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.SplittableRandom;
 import java.util.logging.Logger;
 
 public class UserFacade {
@@ -49,7 +47,8 @@ public class UserFacade {
 
     public void updateUser(int index, String name, byte age, float height, float weight, String sex) {
         try {
-            userService.updateUser(index, name, age, height, weight, sex);
+            User updated = new User(name, age, height, weight, sex);
+            userService.updateUser(index, updated);
             logger.info("User updated successfully.");
         } catch (Exception e) {
             logger.severe("Error updating user: " + e.getMessage());

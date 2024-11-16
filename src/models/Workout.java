@@ -1,19 +1,18 @@
 package treinotrack.models;
 
 import treinotrack.models.exercises.ExerciseAbstract;
-
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Workout implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private ArrayList<ExerciseAbstract> exercises;
+public class Workout {
     private String name;
     private String description;
+    private List<ExerciseAbstract> exercises;
 
     public Workout(String name, String description) {
         this.name = name;
         this.description = description;
+        this.exercises = new ArrayList<>(); // Initialize the exercises list
     }
 
     public String getName() {
@@ -32,24 +31,11 @@ public class Workout implements Serializable {
         this.description = description;
     }
 
-    public ArrayList<ExerciseAbstract> getExercises() {
+    public List<ExerciseAbstract> getExercises() {
         return exercises;
     }
 
     public void addExercise(ExerciseAbstract exercise) {
         this.exercises.add(exercise);
-    }
-
-    public void removeExercise(ExerciseAbstract exercise) {
-        this.exercises.remove(exercise);
-    }
-
-    @Override
-    public String toString() {
-        return "Workout{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", exercises=" + exercises +
-                '}';
     }
 }

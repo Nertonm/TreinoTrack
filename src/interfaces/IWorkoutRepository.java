@@ -5,8 +5,8 @@ import java.util.List;
 
 public interface IWorkoutRepository {
     List<Workout> getWorkouts();
-    void addWorkout(Workout workout);
-    void saveWorkouts();
+    void createWorkout(Workout workout);
+    void saveWorkout(Workout workout);
     void updateWorkout(int index, Workout workout);
     void deleteWorkout(int index);
 }
