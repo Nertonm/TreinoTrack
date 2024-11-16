@@ -1,41 +1,41 @@
 package treinotrack.models;
 
-import treinotrack.interfaces.IWorkout;
+import treinotrack.models.exercises.ExerciseAbstract;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Workout implements IWorkout {
+public class Workout {
     private String name;
     private String description;
+    private List<ExerciseAbstract> exercises;
 
     public Workout(String name, String description) {
         this.name = name;
         this.description = description;
+        this.exercises = new ArrayList<>(); // Initialize the exercises list
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public void setName(String name) {
         this.name = name;
     }
 
-    @Override
     public String getDescription() {
         return description;
     }
 
-    @Override
     public void setDescription(String description) {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "Workout{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                '}';
+    public List<ExerciseAbstract> getExercises() {
+        return exercises;
+    }
+
+    public void addExercise(ExerciseAbstract exercise) {
+        this.exercises.add(exercise);
     }
 }

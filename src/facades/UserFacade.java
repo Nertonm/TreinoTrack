@@ -1,60 +1,87 @@
 package treinotrack.facades;
+
+import treinotrack.models.User;
 import treinotrack.service.UserService;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class UserFacade {
-    private UserService userService;
-    private Scanner scanner;
+    private final UserService userService;
+    private static final Logger logger = Logger.getLogger(UserFacade.class.getName());
 
-    public UserFacade(){
-        this.userService = new UserService();
-        this.scanner = new Scanner(System.in);
+    public UserFacade(UserService userService) {
+        this.userService = userService;
     }
 
-    public void start(){
-        int option;
-
-        do{
-            displayMenu();
-            option = getValidInt("Escolha uma opção:(1-5)");
-            switch (option){
-                case 1 -> userService.CreateNewUser();
-                case 2 -> userService.ReadUserList();
-                case 3 -> userService.UpdateUser();
-                case 4 -> userService.DeleteUser();
-                case 5 -> System.out.println("Saindo...");
-                default -> System.out.println("Opção invalida");
-            }
-        }
-        while(option!=5);
-
-        userService.saveUsers();
-    }
-
-    private void displayMenu(){
-        System.out.println("\n--- Menu de Gerenciamento de Usuários ---");
-        System.out.println("1. Criar Novo Usuário");
-        System.out.println("2. Ler Lista de Usuários");
-        System.out.println("3. Atualizar Usuário");
-        System.out.println("4. Deletar Usuário");
-        System.out.println("5. Sair");
-    }
-
-    private int getValidInt(String prompt) {
-        while (true) {
-            System.out.print(prompt);
-            try {
-                return scanner.nextInt();
-            } catch (InputMismatchException error) {
-                System.out.println("Entrada inválida. Por favor, insira um número válido.");
-                scanner.next(); // Limpa o scanner
-            }
+    public User readUserByIndex(int index) {
+        try {
+            User user = userService.getUserByIndex(index);
+            logger.info("User read successfully.");
+            return user;
+        } catch (Exception e) {
+            logger.severe("Error reading user: " + e.getMessage());
+            throw e;
         }
     }
 
-    public void close(){
-        scanner.close();
+    public void createUser(String name, byte age, float height, float weight, String sex) {
+        try {
+            userService.createUser(name, age, height, weight, sex);
+            logger.info("User created successfully.");
+        } catch (Exception e) {
+            logger.severe("Error creating user: " + e.getMessage());
+        }
+    }
+
+    public List<User> readUsers() {
+        try {
+            List<User> users = userService.readUsers();
+            logger.info("Users read successfully.");
+            return users;
+        } catch (Exception e) {
+            logger.severe("Error reading users: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    public void updateUser(int index, String name, byte age, float height, float weight, String sex) {
+        try {
+            User updated = new User(name, age, height, weight, sex);
+            userService.updateUser(index, updated);
+            logger.info("User updated successfully.");
+        } catch (Exception e) {
+            logger.severe("Error updating user: " + e.getMessage());
+        }
+    }
+
+    public void deleteUser(int index) {
+        try {
+            userService.deleteUser(index);
+            logger.info("User deleted successfully.");
+        } catch (Exception e) {
+            logger.severe("Error deleting user: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    public List<User> getUsers() {
+        try {
+            List<User> users = userService.getUsers();
+            logger.info("Users retrieved successfully.");
+            return users;
+        } catch (Exception e) {
+            logger.severe("Error retrieving users: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    public void saveUsers() {
+        try {
+            userService.saveUsers();
+            logger.info("Users saved successfully.");
+        } catch (Exception e) {
+            logger.severe("Error saving users: " + e.getMessage());
+        }
     }
 }
