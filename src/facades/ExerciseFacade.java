@@ -9,8 +9,8 @@ import java.util.List;
 public class ExerciseFacade {
     private final ExerciseService exerciseService;
 
-    public ExerciseFacade(ExerciseService exerciseService) {
-        this.exerciseService = exerciseService;
+    public ExerciseFacade() {
+        this.exerciseService = new ExerciseService();
     }
 
     public void addExercise(ExerciseAbstract exercise) {

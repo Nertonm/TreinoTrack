@@ -17,7 +17,7 @@ public class WorkoutService {
 		this.workoutRepository = new WorkoutRepository();
 	}
 
-	public List<Workout> loadWorkouts(User user) {
+	public List<Workout> loadWorkouts() {
 		return workoutRepository.getWorkouts();
 	}
 
@@ -39,6 +39,32 @@ public class WorkoutService {
 			logger.severe("Invalid index for workout update.");
 		}
 	}
+	public void updateWorkout(User user, int index, String name) {
+		List<Workout> workouts = workoutRepository.getWorkouts();
+		if (index >= 0 && index < workouts.size()) {
+			Workout workout = workouts.get(index);
+			workout.setName(name);
+			workoutRepository.updateWorkout(index, workout);
+			logger.info("Workout updated successfully.");
+		} else {
+			logger.severe("Invalid index for workout update.");
+		}
+	}
+
+	public void updateWorkout(User user, int index, int a, String description) {
+		List<Workout> workouts = workoutRepository.getWorkouts();
+		if (index >= 0 && index < workouts.size()) {
+			Workout workout = workouts.get(index);
+			workout.setDescription(description);
+			workoutRepository.updateWorkout(index, workout);
+			logger.info("Workout updated successfully.");
+		} else {
+			logger.severe("Invalid index for workout update.");
+		}
+	}
+
+
+
 
 	public void deleteWorkout(User user, int index) {
 		List<Workout> workouts = workoutRepository.getWorkouts();

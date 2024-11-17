@@ -34,6 +34,11 @@ public class Treadmil extends Cardio {
 
     @Override
     public String toString() {
-        return super.toString() + ", Speed: " + speed + ", Duration: " + duration;
+        return "Treadmil{" +
+                "name='" + getName() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", speed=" + speed +
+                ", duration=" + duration +
+                '}';
     }
 }

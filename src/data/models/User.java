@@ -12,6 +12,7 @@ public class User implements Serializable{
     private float weight; // peso em kg
     private String sex;
 	private List<String> workoutsNamePath;
+	private float IMC;
 
 	// Builder
 	public User(String name, byte age, float height, float weight, String sex){
@@ -20,6 +21,7 @@ public class User implements Serializable{
 		this.height = height;
 		this.weight = weight;
 		this.sex = sex;
+		this.IMC = weight / (height * height);
 		this.workoutsNamePath = new ArrayList<>();
 	}
 
@@ -45,6 +47,19 @@ public class User implements Serializable{
 	//sexo
 	public String getSex() {return sex;}
 	public void setSex(String sex) {this.sex = sex;}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"name:'" + name + '\'' +
+				", age:" + age +
+				", height:" + height +
+				", weight:" + weight +
+				", sex:'" + sex + '\'' +
+				", IMC:'" + IMC + '\'' +
+				", workouts:" + workoutsNamePath +
+				'}';
+	}
 
 	public List<String> getWorkouts() {
 		return this.workoutsNamePath;

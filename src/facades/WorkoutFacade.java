@@ -13,8 +13,8 @@ public class WorkoutFacade {
     private final WorkoutService workoutService;
     private static final Logger logger = Logger.getLogger(WorkoutFacade.class.getName());
 
-    public WorkoutFacade(WorkoutService workoutService) {
-        this.workoutService = workoutService;
+    public WorkoutFacade() {
+        this.workoutService = new WorkoutService();
     }
 
     public void createWorkout(User user, String name, String description) {
@@ -26,9 +26,9 @@ public class WorkoutFacade {
         }
     }
 
-    public List<Workout> loadWorkouts(User user) {
+    public List<Workout> loadWorkouts() {
         try {
-            List<Workout> workouts = workoutService.loadWorkouts(user);
+            List<Workout> workouts = workoutService.loadWorkouts();
             logger.info("Workouts loaded successfully.");
             return workouts;
         } catch (Exception e) {
@@ -40,6 +40,22 @@ public class WorkoutFacade {
     public void updateWorkout(User user, int index, String name, String description) {
         try {
             workoutService.updateWorkout(user, index, name, description);
+            logger.info("Workout updated successfully.");
+        } catch (Exception e) {
+            logger.severe("Error updating workout: " + e.getMessage());
+        }
+    }
+    public void updateWorkout(User user, int index, int a, String description) {
+        try {
+            workoutService.updateWorkout(user, index, description);
+            logger.info("Workout updated successfully.");
+        } catch (Exception e) {
+            logger.severe("Error updating workout: " + e.getMessage());
+        }
+    }
+    public void updateWorkout(User user, int index, String name) {
+        try {
+            workoutService.updateWorkout(user, index, name);
             logger.info("Workout updated successfully.");
         } catch (Exception e) {
             logger.severe("Error updating workout: " + e.getMessage());

@@ -24,8 +24,15 @@ public class Strength extends ExerciseAbstract {
     public double getWeight() {
         return weight;
     }
+
     @Override
     public String toString() {
-        return super.toString() + ", Sets: " + sets + ", Reps: " + reps + ", Weight: " + weight;
+        return "\nStrength{ " +
+                "name='" + getName() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", sets=" + sets +
+                ", reps=" + reps +
+                ", weight=" + weight +
+                '}';
     }
 }

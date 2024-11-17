@@ -67,6 +67,11 @@ public class UserService {
     }
 
 
+    public String returnUser(int index) {
+        User user = getUserByIndex(index);
+        return user.toString();
+    }
+
     public void saveUsers() {
         userRepository.saveUsers();
     }

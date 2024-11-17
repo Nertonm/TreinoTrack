@@ -18,7 +18,12 @@ public class Hike extends Cardio {
         return 3.8; // Caminhada leve
     }
 
+    @Override
     public String toString() {
-        return super.toString() + ", Duration: " + duration;
+        return "Hike{" +
+                "name='" + getName() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", duration=" + duration +
+                '}';
     }
 }

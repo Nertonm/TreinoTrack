@@ -10,21 +10,24 @@ public class UserFacade {
     private final UserService userService;
     private static final Logger logger = Logger.getLogger(UserFacade.class.getName());
 
-    public UserFacade(UserService userService) {
-        this.userService = userService;
+    public UserFacade() {
+        this.userService = new UserService();
+    }
+
+    public String returnUser(int index) {
+        return userService.returnUser(index);
     }
 
 
     public User readUserByIndex(int index) {
         try {
-            User user = userService.getUserByIndex(index);
-            logger.info("User read successfully.");
-            return user;
-        } catch (Exception e) {
+            return userService.getUserByIndex(index);
+        } catch (IndexOutOfBoundsException e) {
             logger.severe("Error reading user: " + e.getMessage());
-            throw e;
+            return null; // or handle the error as needed
         }
     }
+
     public void assignWorkoutToUser(int userIndex, String workoutName) {
         userService.assignWorkoutToUser(userIndex, workoutName);
     }

@@ -44,4 +44,17 @@ public class Workout {
     public void setExercises(String jsonExercises) {
         this.exercises = new ArrayList<>();
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name: ").append(name)
+                .append(", Description: ").append(description)
+                .append(", Exercises: [");
+        for (ExerciseAbstract exercise : exercises) {
+            sb.append("\n  ").append(exercise.toString());
+        }
+        sb.append("\n]");
+        return sb.toString();
+    }
 }

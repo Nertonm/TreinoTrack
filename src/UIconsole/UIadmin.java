@@ -3,16 +3,9 @@ package treinotrack.UIconsole;
 
 import treinotrack.facades.ExerciseFacade;
 import treinotrack.facades.UserFacade;
-import treinotrack.data.models.User;
-import treinotrack.data.models.exercises.*;
-import treinotrack.service.ExerciseService;
-import treinotrack.service.UserService;
-import treinotrack.service.WorkoutService;
 import treinotrack.facades.WorkoutFacade;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import treinotrack.data.models.Workout;
-import java.util.List;
 
 public class UIadmin {
     private final UserFacade userFacade;
@@ -21,12 +14,9 @@ public class UIadmin {
     private final Scanner scanner;
 
     public UIadmin(){
-        UserService userService = new UserService();
-        this.userFacade = new UserFacade(userService);
-        WorkoutService workoutService = new WorkoutService();
-        this.workoutFacade = new WorkoutFacade(workoutService);
-        ExerciseService exerciseService = new ExerciseService();
-        this.exerciseFacade = new ExerciseFacade(exerciseService);
+        this.userFacade = new UserFacade();
+        this.workoutFacade = new WorkoutFacade();
+        this.exerciseFacade = new ExerciseFacade();
         this.scanner = new Scanner(System.in);
     }
 
@@ -121,91 +111,43 @@ public class UIadmin {
                     userFacade.readUsers();
                     System.out.println("Lista de Usuários:");
                     for (int i = 0; i < userFacade.getUsers().size(); i++) {
-                        User user = userFacade.getUsers().get(i);
-                        System.out.println("\nÍndice: " + i
-                                + "\nNome: " + user.getName()
-                                + "\nIdade: " + user.getAge()
-                                + "\nAltura: " + user.getHeight()
-                                + "\nPeso: " + user.getWeight()
-                                + "\nIMC: " + user.getImc()
-                                + "\nSexo:" + user.getSex()
-                        );
+                        System.out.println(userFacade.returnUser(i));
                     }
                 }
                 case 3 -> {
                     int i = getValidInt("Digite o índice do usuário:");
-                    User user = userFacade.readUserByIndex(i);
-                    String newName = user.getName();
-                    byte newAge = user.getAge();
-                    float newHeight = user.getHeight();
-                    float newWeight = user.getWeight();
-                    String newSex = user.getSex();
                     if (i >= 0 && i < userFacade.getUsers().size()) {
-                        while (true) {
-                            System.out.println("Selecione o campo que deseja alterar:");
-                            System.out.println("1. Nome");
-                            System.out.println("2. Idade");
-                            System.out.println("3. Altura");
-                            System.out.println("4. Peso");
-                            System.out.println("5. Sexo");
-                            System.out.println("6. Sair");
-
-                            int choice = getValidInt("Digite sua escolha:");
-                            switch (choice) {
-                                case 1 -> {
-                                    System.out.println("Digite o novo nome:");
-                                    scanner.nextLine(); // Clear the buffer
-                                    newName = scanner.nextLine();
-                                }
-                                case 2 -> {
-                                    System.out.println("Digite a nova idade:");
-                                    scanner.nextLine(); // Clear the buffer
-                                    String ageInput = scanner.nextLine();
-                                    if (!ageInput.isEmpty()) {
-                                        try {
-                                            byte tempAge = Byte.parseByte(ageInput);
-                                            if (tempAge >= 0 && tempAge <= 120) {
-                                                newAge = tempAge;
-                                            } else {
-                                                System.out.println("Idade inválida. Por favor, insira uma idade entre 0 e 120.");
-                                            }
-                                        } catch (NumberFormatException e) {
-                                            System.out.println("Entrada inválida. Mantendo idade atual.");
-                                        }
-                                    }
-                                }
-                                case 3 -> {
-                                    float tempHeight = getValidFloat(scanner, "Digite a nova altura:");
-                                    if (tempHeight >= 0.5 && tempHeight <= 2.5) {
-                                        newHeight = tempHeight;
-                                    } else {
-                                        System.out.println("Altura inválida. Por favor, insira uma altura entre 0.5 e 2.5 metros.");
-                                    }
-                                }
-                                case 4 -> {
-                                    float tempWeight = getValidFloat(scanner, "Digite o novo peso:");
-                                    if (tempWeight >= 2 && tempWeight <= 300) {
-                                        newWeight = tempWeight;
-                                    } else {
-                                        System.out.println("Peso inválido. Por favor, insira um peso entre 2 e 300 quilos.");
-                                    }
-                                }
-                                case 5 -> {
-                                    System.out.println("Digite o novo sexo:");
-                                    scanner.nextLine(); // Clear the buffer
-                                    newSex = getSex(scanner);
-                                }
-                                case 6 -> {
-                                    userFacade.updateUser(i, newName, newAge, newHeight, newWeight, newSex);
-                                    System.out.println("Usuário atualizado com sucesso!");
-                                    break;
-                                }
-                                default -> System.out.println("Escolha inválida. Tente novamente.");
-                            }
-                            if (choice == 6) {
-                                break;
-                            }
+                        System.out.println("Digite o novo nome:");
+                        scanner.nextLine(); // Clear the buffer
+                        String name = scanner.nextLine();
+                        while (name.isEmpty()) {
+                            System.out.println("Nome não pode ser vazio. Digite o nome:");
+                            name = scanner.nextLine();
                         }
+
+                        byte age = getValidByte(scanner, "Digite a idade(anos):");
+                        while (age < 0 || age > 120) {
+                            System.out.println("Idade inválida. Por favor, insira uma idade entre 0 e 120.");
+                            age = getValidByte(scanner, "Digite a idade(anos):");
+                        }
+
+                        float height = getValidFloat(scanner, "Digite a altura(metros):");
+                        while (height < 0.5 || height > 2.5) {
+                            System.out.println("Altura inválida. Por favor, insira uma altura entre 0,5 e 2,5 metros.");
+                            height = getValidFloat(scanner, "Digite a altura(metros):");
+                        }
+
+                        float weight = getValidFloat(scanner, "Digite o peso(kilos):");
+                        while (weight < 2 || weight > 300) {
+                            System.out.println("Peso inválido. Por favor, insira um peso entre 2 e 300 quilos.");
+                            weight = getValidFloat(scanner, "Digite o peso(kilos):");
+                        }
+
+                        System.out.println("Digite o sexo:");
+                        String sex = getSex(scanner);
+
+                        userFacade.updateUser(i, name, age, height, weight, sex);
+                        System.out.println("Usuário atualizado com sucesso!");
                     } else {
                         System.out.println("Índice inválido!");
                     }
@@ -287,24 +229,27 @@ public class UIadmin {
     }
     public void startWorkoutManager() {
         int option;
-        List<User> users = userFacade.readUsers();
-        if (users.isEmpty()) {
+        //List<User> users = userFacade.readUsers();
+        if (userFacade.readUsers().isEmpty()) {
             System.out.println("Nenhum usuário disponível.");
         }
         else {
             System.out.println("Digite o índice do usuário:");
             int userIndex = scanner.nextInt();
             scanner.nextLine();
-            User user = userFacade.readUserByIndex(userIndex);
+            while (userIndex > userFacade.getUsers().size() - 1) {
+                System.out.println("Índice inválido.");
+                userIndex = scanner.nextInt();
+            }
             System.out.println("Saindo do Gerenciamento de Treinos de User...");
             do {
                 displayWorkoutMenu();
                 option = getValidInt("Escolha uma opção:(1-7)");
                 switch (option) {
-                    case 1 -> createWorkout(user);
-                    case 2 -> readWorkouts(user);
-                    case 3 -> updateWorkout(user);
-                    case 4 -> deleteWorkout(user);
+                    case 1 -> createWorkout(userIndex);
+                    case 2 -> readWorkouts(userIndex);
+                    case 3 -> updateWorkout(userIndex);
+                    case 4 -> deleteWorkout(userIndex);
                     case 5 -> assignWorkout(userIndex);
                     case 6 -> unassignWorkout(userIndex);
                     case 7 -> System.out.println("Saindo do Gerenciamento de Treinos...");
@@ -339,9 +284,7 @@ public class UIadmin {
                 int workoutIndex = scanner.nextInt();
                 System.out.println("Enter the exercise index:");
                 int exerciseIndex = scanner.nextInt();
-                Workout workout = workoutFacade.readWorkoutByIndex(workoutIndex);
-                ExerciseAbstract exercise = exerciseFacade.getExerciseByIndex(exerciseIndex);
-                workoutFacade.addExerciseToWorkout(workoutIndex, exercise);
+                workoutFacade.addExerciseToWorkout(workoutIndex, exerciseFacade.getExerciseByIndex(exerciseIndex));
                 System.out.println("Exercise assigned to workout successfully.");
                 break; // Exit the loop if successful
             } catch (IndexOutOfBoundsException e) {
@@ -368,7 +311,7 @@ public class UIadmin {
             }
         } while (option != 5);
     }
-    private void createWorkout(User user) {
+    private void createWorkout(int userIndex) {
         String name;
         do {
             System.out.println("Digite o nome do treino:");
@@ -387,50 +330,53 @@ public class UIadmin {
             }
         } while (description.isEmpty());
 
-        workoutFacade.createWorkout(user, name, description);
+        workoutFacade.createWorkout(userFacade.readUserByIndex(userIndex), name, description);
         System.out.println("Treino criado com sucesso!");
     }
 
-    private void readWorkouts(User user) {
-        List<Workout> workouts = workoutFacade.loadWorkouts(user);
+    private void readWorkouts(int userIndex) {
         System.out.println("Lista de Treinos:");
-        for (int i = 0; i < workouts.size(); i++) {
-            Workout workout = workouts.get(i);
+        for (int i = 0; i < workoutFacade.loadWorkouts().size(); i++) {
             System.out.println("\nÍndice: " + i
-                    + "\nNome: " + workout.getName()
-                    + "\nDescrição: " + workout.getDescription());
+                    + workoutFacade.readWorkoutByIndex(i));
         }
     }
 
-    private void updateWorkout(User user) {
-        readWorkouts(user);
+    private void updateWorkout(int userIndex) {
+        readWorkouts(userIndex);
         int index = getValidInt("Digite o índice do treino a ser atualizado:");
-        List<Workout> workouts = workoutFacade.loadWorkouts(user);
-        if (index >= 0 && index < workouts.size()) {
-            Workout workout = workouts.get(index);
+        if (index >= 0 && index <  workoutFacade.loadWorkouts().size()) {
             System.out.println("Digite o novo nome do treino (ou pressione Enter para manter o atual):");
             String newName = scanner.nextLine();
             if (!newName.isEmpty()) {
-                workout.setName(newName);
+                workoutFacade.updateWorkout(userFacade.readUserByIndex(userIndex), index, newName);
             }
             System.out.println("Digite a nova descrição do treino (ou pressione Enter para manter a atual):");
             String newDescription = scanner.nextLine();
             if (!newDescription.isEmpty()) {
-                workout.setDescription(newDescription);
+                workoutFacade.updateWorkout(userFacade.readUserByIndex(userIndex), index, index, newDescription);
             }
-            workoutFacade.updateWorkout(user, index, newName, newDescription);
+            if (newDescription.isEmpty() && newName.isEmpty()) {
+                System.out.println("Nada foi alterado.");
+                return;
+            }
+            if (!(newDescription.isEmpty() && newName.isEmpty())) {
+                workoutFacade.updateWorkout(userFacade.readUserByIndex(userIndex), index, newName, newDescription);
+                System.out.println("Treino atualizado com sucesso!");
+                return;
+            }
+
             System.out.println("Treino atualizado com sucesso!");
         } else {
             System.out.println("Índice inválido.");
         }
     }
 
-    private void deleteWorkout(User user) {
-        readWorkouts(user);
+    private void deleteWorkout(int userIndex) {
+        readWorkouts(userIndex);
         int index = getValidInt("Digite o índice do treino a ser deletado:");
-        List<Workout> workouts = workoutFacade.loadWorkouts(user);
-        if (index >= 0 && index < workouts.size()) {
-            workoutFacade.deleteWorkout(user, index);
+        if (index >= 0 && index <  workoutFacade.loadWorkouts().size()) {
+            workoutFacade.deleteWorkout(userFacade.readUserByIndex(userIndex), index);
             System.out.println("Treino deletado com sucesso!");
         } else {
             System.out.println("Índice inválido.");
@@ -477,29 +423,21 @@ public class UIadmin {
     }
 
     private void readExercises() {
-        List<ExerciseAbstract> exercises = exerciseFacade.getExercises();
         System.out.println("Lista de Exercícios:");
-        for (int i = 0; i < exercises.size(); i++) {
-            ExerciseAbstract exercise = exercises.get(i);
+        for (int i = 0; i < exerciseFacade.getExercises().size(); i++) {
             System.out.println("\nÍndice: " + i
-                    + "\nTipo: " + exercise.getClass().getSimpleName()
-                    + "\nNome: " + exercise.getName()
-                    + "\nDescrição: " + exercise.getDescription());
+                    + exerciseFacade.getExerciseByIndex(i));
         }
     }
 
     private void removeExercise() {
         readExercises();
         int index = getValidInt("Digite o índice do exercício a ser removido:");
-        List<ExerciseAbstract> exercises = exerciseFacade.getExercises();
-        if (index >= 0 && index < exercises.size()) {
-            ExerciseAbstract exercise = exercises.get(index);
-            exerciseFacade.removeExercise(exercise);
+        if (index >= 0 && index < exerciseFacade.getExercises().size()) {
+            exerciseFacade.removeExercise(exerciseFacade.getExerciseByIndex(index));
             System.out.println("Exercício removido com sucesso!");
         } else {
             System.out.println("Índice inválido.");
         }
     }
-
-
 }

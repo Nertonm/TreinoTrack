@@ -17,7 +17,12 @@ public class Race extends Cardio {
         return 12.5; // Intense running
     }
 
+    @Override
     public String toString() {
-        return super.toString() + ", Duration: " + duration;
+        return "Race{" +
+                "name='" + getName() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", duration=" + duration +
+                '}';
     }
 }

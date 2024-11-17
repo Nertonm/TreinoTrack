@@ -7,8 +7,6 @@ import treinotrack.facades.WorkoutFacade;
 import treinotrack.data.models.User;
 import treinotrack.data.models.Workout;
 import treinotrack.data.models.exercises.ExerciseAbstract;
-import treinotrack.service.ExerciseService;
-import treinotrack.service.UserService;
 import treinotrack.data.models.exercises.*;
 
 import java.io.BufferedReader;
@@ -26,15 +24,13 @@ public class UIuser {
     private final WorkoutFacade workoutFacade;
     private final User user;
     private final Scanner scanner;
-    private UserService userService = new UserService();
-    private ExerciseService exerciseService = new ExerciseService();
-    private ExerciseFacade exerciseFacade = new ExerciseFacade(exerciseService);
-    private UserFacade userFacade = new UserFacade(userService);
+    private ExerciseFacade exerciseFacade = new ExerciseFacade();
+    private UserFacade userFacade = new UserFacade();
     private static final Logger logger = Logger.getLogger(ExerciseRepository.class.getName());
     private List<ExerciseAbstract> exercises;
 
-    public UIuser(WorkoutFacade workoutFacade, int index) {
-        this.workoutFacade = workoutFacade;
+    public UIuser( int index) {
+        this.workoutFacade = new WorkoutFacade();
         this.user = userFacade.readUserByIndex(index);
         this.scanner = new Scanner(System.in);
         this.exercises = new ArrayList<>();
@@ -43,7 +39,7 @@ public class UIuser {
 
     public void showUserWorkouts(int userIndex) {
         List<String> workouts = userFacade.getUserWorkouts(userIndex);
-        System.out.println("Lista de Treinos Atribuídos ao Usuário: " + userService.getUserByIndex(userIndex).getName());
+        System.out.println("Lista de Treinos Atribuídos ao Usuário: " + userFacade.returnUser(userIndex));
         for (int i = 0; i < workouts.size(); i++) {
             System.out.println("Índice: " + i + " - Nome do Treino: " + workouts.get(i));
         }
@@ -52,7 +48,7 @@ public class UIuser {
         int index = scanner.nextInt();
         if (index >= 0 && index < workouts.size()) {
             String workoutName = workouts.get(index);
-            List<Workout> workoutList = workoutFacade.loadWorkouts(userFacade.readUserByIndex(userIndex));
+            List<Workout> workoutList = workoutFacade.loadWorkouts();
             for (Workout workout : workoutList) {
                 System.out.println("Workout Name: " + workout.getName());
                 showWorkoutDetails(workout.getName());
