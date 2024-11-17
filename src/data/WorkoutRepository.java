@@ -109,27 +109,27 @@ public class WorkoutRepository implements IWorkoutRepository {
                     }
                     String jsonString = json.toString();
                     if (!jsonString.isEmpty()) {
-                        String[] fields = jsonString.replace("{", "").replace("}", "").split(",");
+                        String[] fields = jsonString.replace("{", "").replace("}", "").split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
                         if (fields.length >= 3) {
-                            String name = fields[0].split(":")[1].replace("\"", "");
-                            String description = fields[1].split(":")[1].replace("\"", "");
+                            String name = fields[0].split(":")[1].replace("\"", "").trim();
+                            String description = fields[1].split(":")[1].replace("\"", "").trim();
                             Workout workout = new Workout(name, description);
-                            String exercisesString = fields[2].split(":")[1];
+                            String exercisesString = fields[2].split(":")[1].trim();
                             exercisesString = exercisesString.substring(1, exercisesString.length() - 1); // Remove brackets
                             String[] exerciseStrings = exercisesString.split("\\},\\{");
                             for (String exerciseString : exerciseStrings) {
                                 exerciseString = exerciseString.replace("{", "").replace("}", "");
-                                String[] exerciseFields = exerciseString.split(",");
+                                String[] exerciseFields = exerciseString.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
                                 if (exerciseFields.length >= 3) {
-                                    String type = exerciseFields[0].split(":")[1].replace("\"", "");
-                                    String exerciseName = exerciseFields[1].split(":")[1].replace("\"", "");
-                                    String exerciseDescription = exerciseFields[2].split(":")[1].replace("\"", "");
+                                    String type = exerciseFields[0].split(":")[1].replace("\"", "").trim();
+                                    String exerciseName = exerciseFields[1].split(":")[1].replace("\"", "").trim();
+                                    String exerciseDescription = exerciseFields[2].split(":")[1].replace("\"", "").trim();
                                     ExerciseAbstract exercise;
                                     switch (type) {
                                         case "Treadmil":
                                             if (exerciseFields.length >= 5) {
-                                                double speed = Double.parseDouble(exerciseFields[3].split(":")[1].replace("\"", ""));
-                                                double duration = Double.parseDouble(exerciseFields[4].split(":")[1].replace("\"", ""));
+                                                double speed = Double.parseDouble(exerciseFields[3].split(":")[1].replace("\"", "").trim());
+                                                double duration = Double.parseDouble(exerciseFields[4].split(":")[1].replace("\"", "").trim());
                                                 exercise = new Treadmil(duration, speed, exerciseName, exerciseDescription);
                                             } else {
                                                 throw new IllegalArgumentException("Invalid Treadmil exercise data.");
@@ -137,7 +137,7 @@ public class WorkoutRepository implements IWorkoutRepository {
                                             break;
                                         case "Hike":
                                             if (exerciseFields.length >= 4) {
-                                                double duration = Double.parseDouble(exerciseFields[3].split(":")[1].replace("\"", ""));
+                                                double duration = Double.parseDouble(exerciseFields[3].split(":")[1].replace("\"", "").trim());
                                                 exercise = new Hike(duration, exerciseName, exerciseDescription);
                                             } else {
                                                 throw new IllegalArgumentException("Invalid Hike exercise data.");
@@ -145,9 +145,9 @@ public class WorkoutRepository implements IWorkoutRepository {
                                             break;
                                         case "Strength":
                                             if (exerciseFields.length >= 6) {
-                                                int sets = Integer.parseInt(exerciseFields[3].split(":")[1].replace("\"", ""));
-                                                int reps = Integer.parseInt(exerciseFields[4].split(":")[1].replace("\"", ""));
-                                                float strengthWeight = Float.parseFloat(exerciseFields[5].split(":")[1].replace("\"", ""));
+                                                int sets = Integer.parseInt(exerciseFields[3].split(":")[1].replace("\"", "").trim());
+                                                int reps = Integer.parseInt(exerciseFields[4].split(":")[1].replace("\"", "").trim());
+                                                float strengthWeight = Float.parseFloat(exerciseFields[5].split(":")[1].replace("\"", "").trim());
                                                 exercise = new Strength(sets, reps, strengthWeight, exerciseName, exerciseDescription);
                                             } else {
                                                 throw new IllegalArgumentException("Invalid Strength exercise data.");
@@ -167,5 +167,4 @@ public class WorkoutRepository implements IWorkoutRepository {
                 }
             }
         }
-    }
-}
+    }}
