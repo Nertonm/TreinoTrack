@@ -296,7 +296,7 @@ public class UIadmin {
         User user = userFacade.readUserByIndex(userIndex);
         do {
             displayWorkoutMenu();
-            option = getValidInt("Escolha uma opção:(1-5)");
+            option = getValidInt("Escolha uma opção:(1-7)");
             switch (option) {
                 case 1 -> createWorkout(user);
                 case 2 -> readWorkouts(user);
@@ -307,7 +307,7 @@ public class UIadmin {
                 case 7 -> System.out.println("Saindo do Gerenciamento de Treinos...");
                 default -> System.out.println("Opção inválida");
             }
-        } while (option != 5);
+        } while (option != 7);
     }
 
 
@@ -351,7 +351,7 @@ public class UIadmin {
                 case 5 -> System.out.println("Saindo do Gerenciamento de Exercícios...");
                 default -> System.out.println("Opção inválida");
             }
-        } while (option != 4);
+        } while (option != 5);
     }
     private void createWorkout(User user) {
         String name;
