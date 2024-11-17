@@ -56,7 +56,7 @@ public class ExerciseRepository {
                     Strength strength = (Strength) exercise;
                     writer.write(",\"sets\":\"" + strength.getSets() + "\",");
                     writer.write("\"reps\":\"" + strength.getReps() + "\",");
-                    writer.write("\"weight\":\"" + strength.getWeight() + "\"");
+                    writer.write("\"weight\":\"" + strength.getWeight() + "\",");
                 }
                 writer.write("}");
                 if (i < exercises.size() - 1) {
@@ -98,8 +98,8 @@ public class ExerciseRepository {
                                 logger.warning("Invalid Treadmil data: " + exerciseString);
                                 continue;
                             }
-                            double speed = Double.parseDouble(fields[3].split(":")[1].replace("\"", "").trim());
-                            double duration = Double.parseDouble(fields[4].split(":")[1].replace("\"", "").trim());
+                            double speed = Double.parseDouble(fields[3].split(":")[1].replace("\"", "").replace(",", "").trim());
+                            double duration = Double.parseDouble(fields[4].split(":")[1].replace("\"", "").replace(",", "").trim());
                             exercise = new Treadmil(duration, speed, name, description);
                             break;
                         case "Hike":
@@ -107,7 +107,7 @@ public class ExerciseRepository {
                                 logger.warning("Invalid Hike data: " + exerciseString);
                                 continue;
                             }
-                            duration = Double.parseDouble(fields[3].split(":")[1].replace("\"", "").trim());
+                            duration = Double.parseDouble(fields[3].split(":")[1].replace("\"", "").replace(",", "").trim());
                             exercise = new Hike(duration, name, description);
                             break;
                         case "Race":
@@ -115,7 +115,7 @@ public class ExerciseRepository {
                                 logger.warning("Invalid Race data: " + exerciseString);
                                 continue;
                             }
-                            duration = Double.parseDouble(fields[3].split(":")[1].replace("\"", "").trim());
+                            duration = Double.parseDouble(fields[3].split(":")[1].replace("\"", "").replace(",", "").trim());
                             exercise = new Race(duration, name, description);
                             break;
                         case "Strength":
@@ -123,9 +123,9 @@ public class ExerciseRepository {
                                 logger.warning("Invalid Strength data: " + exerciseString);
                                 continue;
                             }
-                            int sets = Integer.parseInt(fields[3].split(":")[1].replace("\"", "").trim());
-                            int reps = Integer.parseInt(fields[4].split(":")[1].replace("\"", "").trim());
-                            float strengthWeight = Float.parseFloat(fields[5].split(":")[1].replace("\"", "").trim());
+                            int sets = Integer.parseInt(fields[3].split(":")[1].replace("\"", "").replace(",", "").trim());
+                            int reps = Integer.parseInt(fields[4].split(":")[1].replace("\"", "").replace(",", "").trim());
+                            float strengthWeight = Float.parseFloat(fields[5].split(":")[1].replace("\"", "").replace(",", "").trim());
                             exercise = new Strength(sets, reps, strengthWeight, name, description);
                             break;
                         default:

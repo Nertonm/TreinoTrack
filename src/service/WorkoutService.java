@@ -62,17 +62,18 @@ public class WorkoutService {
 		}
 	}
 
-	public Workout readWorkoutByIndex(int index) {
+
+	public Workout readWorkoutByIndex(int workoutIndex) {
 		List<Workout> workouts = workoutRepository.getWorkouts();
-		if (index >= 0 && index < workouts.size()) {
-			return workouts.get(index);
+		if (workoutIndex >= 0 && workoutIndex < workouts.size()) {
+			return workouts.get(workoutIndex);
 		} else {
-			throw new IndexOutOfBoundsException("Invalid workout index");
+			logger.severe("Invalid workout index: " + workoutIndex);
+			throw new IndexOutOfBoundsException("Invalid workout index: " + workoutIndex);
 		}
 	}
 
-
-	public void addExerciseToWorkout( int workoutIndex, ExerciseAbstract exercise) {
+	public void addExerciseToWorkout(int workoutIndex, ExerciseAbstract exercise) {
 		List<Workout> workouts = workoutRepository.getWorkouts();
 		if (workoutIndex >= 0 && workoutIndex < workouts.size()) {
 			Workout workout = workouts.get(workoutIndex);
@@ -81,6 +82,7 @@ public class WorkoutService {
 			logger.info("Exercise added to workout successfully.");
 		} else {
 			logger.severe("Invalid workout index.");
+			throw new IndexOutOfBoundsException("Invalid workout index");
 		}
 	}
 }

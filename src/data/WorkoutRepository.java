@@ -70,8 +70,9 @@ public class WorkoutRepository implements IWorkoutRepository {
                     writer.write(",\"duration\":\"" + cardio.getDuration() + "\"");
                 } else if (exercise instanceof Strength) {
                     Strength strength = (Strength) exercise;
-                    writer.write(",\"weight\":\"" + strength.getWeight() + "\",");
-                    writer.write("\"reps\":\"" + strength.getReps() + "\"");
+                    writer.write(",\"sets\":\"" + strength.getSets() + "\",");
+                    writer.write("\"reps\":\"" + strength.getReps() + "\",");
+                    writer.write("\"weight\":\"" + strength.getWeight() + "\"");
                 }
                 writer.write("}");
                 if (i < workout.getExercises().size() - 1) {

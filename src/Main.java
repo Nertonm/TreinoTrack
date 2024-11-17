@@ -2,9 +2,10 @@ package treinotrack;
 
 import treinotrack.UIconsole.UIadmin;
 import treinotrack.UIconsole.UIuser;
+import treinotrack.data.models.User;
 import treinotrack.facades.WorkoutFacade;
 import treinotrack.service.WorkoutService;
-
+import treinotrack.service.UserWorkoutReader;
 import java.util.Scanner;
 
 public class Main {
@@ -12,6 +13,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         WorkoutService workoutService = new WorkoutService();
         WorkoutFacade workoutFacade = new WorkoutFacade(workoutService);
+
+        UserWorkoutReader userWorkoutReader = new UserWorkoutReader();
 
         System.out.println("Enter your role (admin/user):");
         String role = scanner.nextLine();

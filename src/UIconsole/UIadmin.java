@@ -74,12 +74,7 @@ public class UIadmin {
             option = getValidInt("Escolha uma opção:(1-4)");
             switch (option) {
                 case 1 -> startUserManager();
-                case 2 -> {
-                    System.out.println("Digite o índice do usuário:");
-                    int userIndex = scanner.nextInt();
-                    scanner.nextLine();
-                    startWorkoutManager(userIndex);
-                }
+                case 2 -> startWorkoutManager();
                 case 3 -> startExerciseManager();
                 case 4 -> System.out.println("Saindo...");
                 default -> System.out.println("Opção inválida");
@@ -94,7 +89,6 @@ public class UIadmin {
             option = getValidInt("Escolha uma opção:(1-5)");
             switch (option){
                 case 1 -> {
-                    System.out.println("Digite o nome:");
                     String name = scanner.nextLine();
                     while (name.isEmpty()) {
                         System.out.println("Nome não pode ser vazio. Digite o nome:");
@@ -291,23 +285,33 @@ public class UIadmin {
             }
         }
     }
-    public void startWorkoutManager(int userIndex) {
+    public void startWorkoutManager() {
         int option;
-        User user = userFacade.readUserByIndex(userIndex);
-        do {
-            displayWorkoutMenu();
-            option = getValidInt("Escolha uma opção:(1-7)");
-            switch (option) {
-                case 1 -> createWorkout(user);
-                case 2 -> readWorkouts(user);
-                case 3 -> updateWorkout(user);
-                case 4 -> deleteWorkout(user);
-                case 5 -> assignWorkout(userIndex);
-                case 6 -> unassignWorkout(userIndex);
-                case 7 -> System.out.println("Saindo do Gerenciamento de Treinos...");
-                default -> System.out.println("Opção inválida");
-            }
-        } while (option != 7);
+        List<User> users = userFacade.readUsers();
+        if (users.isEmpty()) {
+            System.out.println("Nenhum usuário disponível.");
+        }
+        else {
+            System.out.println("Digite o índice do usuário:");
+            int userIndex = scanner.nextInt();
+            scanner.nextLine();
+            User user = userFacade.readUserByIndex(userIndex);
+            System.out.println("Saindo do Gerenciamento de Treinos de User...");
+            do {
+                displayWorkoutMenu();
+                option = getValidInt("Escolha uma opção:(1-7)");
+                switch (option) {
+                    case 1 -> createWorkout(user);
+                    case 2 -> readWorkouts(user);
+                    case 3 -> updateWorkout(user);
+                    case 4 -> deleteWorkout(user);
+                    case 5 -> assignWorkout(userIndex);
+                    case 6 -> unassignWorkout(userIndex);
+                    case 7 -> System.out.println("Saindo do Gerenciamento de Treinos...");
+                    default -> System.out.println("Opção inválida");
+                }
+            } while (option != 7);
+        }
     }
 
 
@@ -327,15 +331,26 @@ public class UIadmin {
         System.out.println("Workout unassigned successfully.");
     }
 
+
     public void addExerciseToWorkout() {
-        System.out.println("Enter the workout index:");
-        int workoutIndex = scanner.nextInt();
-        System.out.println("Enter the exercise index:");
-        int exerciseIndex = scanner.nextInt();
-        Workout workout = workoutFacade.readWorkoutByIndex(workoutIndex);
-        ExerciseAbstract exercise= exerciseFacade.getExerciseByIndex(exerciseIndex);
-        workoutFacade.addExerciseToWorkout( workoutIndex, exercise);
-        System.out.println("Exercise assigned to workout successfully.");
+        while (true) {
+            try {
+                System.out.println("Enter the workout index:");
+                int workoutIndex = scanner.nextInt();
+                System.out.println("Enter the exercise index:");
+                int exerciseIndex = scanner.nextInt();
+                Workout workout = workoutFacade.readWorkoutByIndex(workoutIndex);
+                ExerciseAbstract exercise = exerciseFacade.getExerciseByIndex(exerciseIndex);
+                workoutFacade.addExerciseToWorkout(workoutIndex, exercise);
+                System.out.println("Exercise assigned to workout successfully.");
+                break; // Exit the loop if successful
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Invalid index. Please try again.");
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+                scanner.next(); // Clear the invalid input
+            }
+        }
     }
 
     public void startExerciseManager() {
