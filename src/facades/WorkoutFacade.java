@@ -30,7 +30,7 @@ public class WorkoutFacade {
         String userFilePath = "users.json";
         List<String> workoutNames = userWorkoutReader.readUserWorkouts(userFilePath, userIndex);
         for (String workoutName : workoutNames) {
-            userWorkoutReader.addStringJsonMaluco(("Treino: " + workoutName + "\n"));
+            userWorkoutReader.addStringJsonMaluco("Treino: " + workoutName + "\n");
             userWorkoutReader.showWorkoutDetails(workoutName);
         }
         return userWorkoutReader.getExercises();
