@@ -9,11 +9,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import treinotrack.service.UserService;
 
 public class UserWorkoutReader {
     private static final Logger logger = Logger.getLogger(UserWorkoutReader.class.getName());
+    static {
+        logger.setLevel(Level.OFF);
+    }
     private final List<String> exercicios = new ArrayList<>();
     private final UserService userService = new UserService();
 

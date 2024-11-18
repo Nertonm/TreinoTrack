@@ -104,7 +104,8 @@ public class WorkoutService {
 		if (workoutIndex >= 0 && workoutIndex < workouts.size()) {
 			Workout workout = workouts.get(workoutIndex);
 			workout.addExercise(exercise);
-			workoutRepository.updateWorkout(workoutIndex, workout);
+			workoutRepository.saveWorkout(workout);
+			//workoutRepository.updateWorkout(workoutIndex, workout);
 			logger.info("Exercise added to workout successfully.");
 		} else {
 			logger.severe("Invalid workout index.");

@@ -289,6 +289,9 @@ public class UIadmin {
     public void addExerciseToWorkout() {
         while (true) {
             try {
+                for(int i = 0; i < workoutFacade.loadWorkouts().size(); i++){
+                    System.out.println("Indice: "+ i + " " + workoutFacade.readWorkoutByIndex(i));
+                }
                 System.out.println("Enter the workout index:");
                 int workoutIndex = scanner.nextInt();
                 System.out.println("Enter the exercise index:");
