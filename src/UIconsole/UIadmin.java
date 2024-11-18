@@ -12,10 +12,10 @@ public class UIadmin {
     private final ExerciseFacade exerciseFacade;
     private final Scanner scanner;
 
-    public UIadmin(){
-        this.userFacade = new UserFacade();
-        this.workoutFacade = new WorkoutFacade();
-        this.exerciseFacade = new ExerciseFacade();
+    public UIadmin(UserFacade userFacade, WorkoutFacade workoutFacade, ExerciseFacade exerciseFacade){
+        this.userFacade = userFacade;
+        this.workoutFacade = workoutFacade;
+        this.exerciseFacade = exerciseFacade;
         this.scanner = new Scanner(System.in);
     }
 
@@ -172,7 +172,7 @@ public class UIadmin {
                 return scanner.nextInt();
             } catch (InputMismatchException error) {
                 System.out.println("Entrada inválida. Por favor, insira um número válido.");
-                scanner.next(); // Limpa o scanner
+                scanner.next();
             }
         }
     }

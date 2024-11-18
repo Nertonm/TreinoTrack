@@ -27,18 +27,6 @@ public class WorkoutService {
 		logger.info("Workout created successfully.");
 	}
 
-	public void updateWorkout(int index, String name, String description) {
-		List<Workout> workouts = workoutRepository.getWorkouts();
-		if (index >= 0 && index < workouts.size()) {
-			Workout workout = workouts.get(index);
-			workout.setName(name);
-			workout.setDescription(description);
-			workoutRepository.updateWorkout(index, workout);
-			logger.info("Workout updated successfully.");
-		} else {
-			logger.severe("Invalid index for workout update.");
-		}
-	}
 	public void updateWorkout(int index, String name) {
 		List<Workout> workouts = workoutRepository.getWorkouts();
 		if (index >= 0 && index < workouts.size()) {
@@ -50,21 +38,6 @@ public class WorkoutService {
 			logger.severe("Invalid index for workout update.");
 		}
 	}
-
-	public void updateWorkout(User user, int index, int a, String description) {
-		List<Workout> workouts = workoutRepository.getWorkouts();
-		if (index >= 0 && index < workouts.size()) {
-			Workout workout = workouts.get(index);
-			workout.setDescription(description);
-			workoutRepository.updateWorkout(index, workout);
-			logger.info("Workout updated successfully.");
-		} else {
-			logger.severe("Invalid index for workout update.");
-		}
-	}
-
-
-
 
 	public void deleteWorkout(int index) {
 		List<Workout> workouts = workoutRepository.getWorkouts();

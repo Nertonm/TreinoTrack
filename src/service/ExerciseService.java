@@ -33,6 +33,18 @@ public class ExerciseService {
             throw new IndexOutOfBoundsException("Invalid exercise index");
         }
     }
+
+    public float getCaloriesBurned(ExerciseAbstract exercise, float weight) {
+        if (exercise == null) {
+            throw new IllegalArgumentException("Exercise cannot be null");
+        } else if (exercise.getClass() == Race.class || exercise.getClass() == Treadmil.class || exercise.getClass() == Hike.class) {
+            return ((Cardio) exercise).getCaloriesBurned(weight);
+        } else if (exercise.getClass() == Strength.class) {
+            throw new IllegalArgumentException("Exercise type not supported");
+        } else {
+            throw new IllegalArgumentException("Exercise type not supported");
+        }
+    }
     public void newTreadmil(String name, String description, double duration, double speed) {
         Treadmil treadmill = new Treadmil(duration, speed, name, description);
         addExercise(treadmill);

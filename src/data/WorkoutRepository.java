@@ -1,4 +1,3 @@
-// WorkoutRepository.java
 package treinotrack.data;
 
 import treinotrack.interfaces.IWorkoutRepository;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorkoutRepository implements IWorkoutRepository {
-    private List<Workout> workouts;
+    private final List<Workout> workouts;
     private static final String DIRECTORY_NAME = "workouts";
 
     public WorkoutRepository() {
@@ -53,7 +52,6 @@ public class WorkoutRepository implements IWorkoutRepository {
         if (!directory.exists()) {
             directory.mkdir();
         }
-
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(DIRECTORY_NAME + "/" + workout.getName() + ".json"))) {
             writer.write("{");
             writer.write("\"name\":\"" + workout.getName() + "\",");
@@ -168,4 +166,5 @@ public class WorkoutRepository implements IWorkoutRepository {
                 }
             }
         }
-    }}
+    }
+}

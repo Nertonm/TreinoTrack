@@ -1,9 +1,7 @@
 package treinotrack.service;
 
-import treinotrack.data.models.exercises.Hike;
-import treinotrack.data.models.exercises.Race;
-import treinotrack.data.models.exercises.Strength;
-import treinotrack.data.models.exercises.Treadmil;
+import treinotrack.data.models.exercises.*;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import treinotrack.service.UserService;
 
 public class UserWorkoutReader {
     private static final Logger logger = Logger.getLogger(UserWorkoutReader.class.getName());
@@ -20,13 +17,14 @@ public class UserWorkoutReader {
     }
     private final List<String> exercicios = new ArrayList<>();
     private final UserService userService = new UserService();
+    private final ExerciseService exerciseService = new ExerciseService();
+    private int userIndex;
 
     public static void main(String[] args) {
         if (args.length < 2) {
             System.out.println("Usage: UserWorkoutReader <userFilePath> <userIndex>");
             return;
         }
-
         String userFilePath = args[0];
         int userIndex = Integer.parseInt(args[1]);
         UserWorkoutReader reader = new UserWorkoutReader();
@@ -44,6 +42,7 @@ public class UserWorkoutReader {
     }
 
     public List<String> readUserWorkouts(String filePath, int userIndex) {
+        this.userIndex = userIndex;
         List<String> workoutsNamePath = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             StringBuilder json = new StringBuilder();
@@ -122,9 +121,9 @@ public class UserWorkoutReader {
                 String type = fields[0].split(":")[1].replace("\"", "").trim();
                 String name = fields[1].split(":")[1].replace("\"", "").trim();
                 String description = fields[2].split(":")[1].replace("\"", "").trim().replace("\\n", "\n");
-               addStringJsonMaluco("Name: " + name);
-               addStringJsonMaluco("    Type: " + type);
-               addStringJsonMaluco("    Description: " + description);
+               addStringJsonMaluco("    Name: " + name + "\n");
+               addStringJsonMaluco("    Type: " + type + "\n");
+               addStringJsonMaluco("    Description: " + description + "\n");
                 switch (type) {
                     case "Treadmil":
                         if (fields.length < 5) {
@@ -133,9 +132,10 @@ public class UserWorkoutReader {
                         }
                         double speed = Double.parseDouble(fields[3].split(":")[1].replace("\"", "").trim());
                         double duration = Double.parseDouble(fields[4].split(":")[1].replace("\"", "").trim());
-                        new Treadmil(duration, speed, name, description);
-                       addStringJsonMaluco("    Speed: " + speed);
+                       addStringJsonMaluco("    Speed: " + speed + "\n");
                        addStringJsonMaluco("    Duration: " + duration + "\n");
+                       addStringJsonMaluco("    +/- Calories Burned: " + exerciseService.getCaloriesBurned(new Treadmil(duration, speed, name, description),
+                               (userService.getUserByIndex(this.userIndex).getWeight())) + "\n" + "\n");
                         break;
                     case "Hike":
                         if (fields.length < 4) {
@@ -143,8 +143,9 @@ public class UserWorkoutReader {
                             break;
                         }
                         double hikeDuration = Double.parseDouble(fields[3].split(":")[1].replace("\"", "").trim());
-                        new Hike(hikeDuration, name, description);
-                       addStringJsonMaluco("    Duration: " + hikeDuration + "\n");
+                        addStringJsonMaluco("    Duration: " + hikeDuration + "\n");
+                        addStringJsonMaluco("    +/- Calories Burned: " + exerciseService.getCaloriesBurned(new Hike(hikeDuration, name, description),
+                                (userService.getUserByIndex(this.userIndex).getWeight())) + "\n" + "\n");
                         break;
                     case "Race":
                         if (fields.length < 4) {
@@ -152,8 +153,9 @@ public class UserWorkoutReader {
                             break;
                         }
                         double raceDuration = Double.parseDouble(fields[3].split(":")[1].replace("\"", "").trim());
-                        new Race(raceDuration, name, description);
-                       addStringJsonMaluco("    Duration: " + raceDuration + "\n");
+                        addStringJsonMaluco("    Duration: " + raceDuration + "\n");
+                        addStringJsonMaluco("    +- Calories Burned: " + exerciseService.getCaloriesBurned(new Race(raceDuration, name, description),
+                                (userService.getUserByIndex(this.userIndex).getWeight())) + "\n" + "\n");
                         break;
                     case "Strength":
                         if (fields.length < 6) { // Adjusted to check for 6 fields
@@ -164,9 +166,9 @@ public class UserWorkoutReader {
                         int reps = Integer.parseInt(fields[4].split(":")[1].replace("\"", "").trim());
                         float strengthWeight = Float.parseFloat(fields[5].split(":")[1].replace("\"", "").trim());
                         new Strength(sets, reps, strengthWeight, name, description);
-                       addStringJsonMaluco("    Sets: " + sets);
-                       addStringJsonMaluco("    Reps: " + reps);
-                       addStringJsonMaluco("    Weight: " + strengthWeight + "\n");
+                       addStringJsonMaluco("    Sets: " + sets + "\n");
+                       addStringJsonMaluco("    Reps: " + reps + "\n");
+                       addStringJsonMaluco("    Weight: " + strengthWeight + "\n" + "\n");
                         break;
                     default:
                         logger.warning("Unknown exercise type: " + type);

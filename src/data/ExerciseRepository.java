@@ -4,17 +4,19 @@ package treinotrack.data;
 import treinotrack.data.models.exercises.*;
 import treinotrack.interfaces.IExerciseRepository;
 
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ExerciseRepository implements IExerciseRepository {
     private List<ExerciseAbstract> exercises;
     private static final String FILE_NAME = "exercises.json";
     private static final Logger logger = Logger.getLogger(ExerciseRepository.class.getName());
-
+    static {
+        logger.setLevel(Level.OFF);
+    }
     public ExerciseRepository() {
         exercises = new ArrayList<>();
         loadExercises();
