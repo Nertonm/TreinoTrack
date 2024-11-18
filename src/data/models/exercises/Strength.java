@@ -27,7 +27,7 @@ public class Strength extends ExerciseAbstract {
 
     @Override
     public String toString() {
-        return "\nStrength{ " +
+        return "Strength{ " +
                 "name='" + getName() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", sets=" + sets +
