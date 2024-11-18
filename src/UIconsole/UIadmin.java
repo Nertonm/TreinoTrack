@@ -346,6 +346,7 @@ public class UIadmin {
         int index = getValidInt("Digite o índice do treino a ser atualizado:");
         if (index >= 0 && index <  workoutFacade.loadWorkouts().size()) {
             System.out.println("Digite o novo nome do treino (ou pressione Enter para manter o atual):");
+            scanner.nextLine();
             String newName = scanner.nextLine();
             if (!newName.isEmpty()) {
                 workoutFacade.updateWorkout(userFacade.readUserByIndex(userIndex), index, newName);
