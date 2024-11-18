@@ -27,12 +27,13 @@ public class WorkoutService {
 		logger.info("Workout created successfully.");
 	}
 
-	public void updateWorkout(int index, String name) {
+	public void updateWorkout(int index, String name, String description, String old) {
 		List<Workout> workouts = workoutRepository.getWorkouts();
 		if (index >= 0 && index < workouts.size()) {
 			Workout workout = workouts.get(index);
 			workout.setName(name);
-			workoutRepository.updateWorkout(index, workout);
+			workout.setDescription(description);
+			workoutRepository.updateWorkout(index, workout, old);
 			logger.info("Workout updated successfully.");
 		} else {
 			logger.severe("Invalid index for workout update.");

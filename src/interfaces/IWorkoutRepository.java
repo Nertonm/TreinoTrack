@@ -7,6 +7,6 @@ public interface IWorkoutRepository {
     List<Workout> getWorkouts();
     void createWorkout(Workout workout);
     void saveWorkout(Workout workout);
-    void updateWorkout(int index, Workout workout);
+    void updateWorkout(int index, Workout workout, String old);
     void deleteWorkout(int index);
 }

@@ -29,10 +29,22 @@ public class WorkoutRepository implements IWorkoutRepository {
     }
 
     @Override
-    public void updateWorkout(int index, Workout updatedWorkout) {
+    public void updateWorkout(int index, Workout updatedWorkout, String old) {
         if (index >= 0 && index < workouts.size()) {
             workouts.set(index, updatedWorkout);
             saveWorkout(updatedWorkout);
+            File file = new File(DIRECTORY_NAME + "/" + old + ".json");
+            System.out.println("Attempting to delete file: " + file.getAbsolutePath());
+            if (file.exists()) {
+                boolean deleted = file.delete();
+                if (!deleted) {
+                    System.err.println("Failed to delete file: " + file.getAbsolutePath());
+                } else {
+                    System.out.println("File deleted successfully: " + file.getAbsolutePath());
+                }
+            } else {
+                System.err.println("File not found: " + file.getAbsolutePath());
+            }
         } else {
             throw new IndexOutOfBoundsException("Invalid index for workout update.");
         }

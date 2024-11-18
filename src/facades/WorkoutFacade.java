@@ -59,18 +59,9 @@ public class WorkoutFacade {
         }
     }
 
-    public void updateWorkout(  int index, int a, String description) {
+    public void updateWorkout( int index, String name, String description, String old) {
         try {
-            workoutService.updateWorkout( index, description);
-            logger.info("Workout updated successfully.");
-        } catch (Exception e) {
-            logger.severe("Error updating workout: " + e.getMessage());
-            System.err.println("Error updating workout: " + e.getMessage());
-        }
-    }
-    public void updateWorkout( int index, String name) {
-        try {
-            workoutService.updateWorkout(index, name);
+            workoutService.updateWorkout(index, name, description, old);
             logger.info("Workout updated successfully.");
         } catch (Exception e) {
             logger.severe("Error updating workout: " + e.getMessage());

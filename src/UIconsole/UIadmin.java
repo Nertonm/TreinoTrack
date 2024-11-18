@@ -360,13 +360,11 @@ public class UIadmin {
             System.out.println("Digite o novo nome do treino (ou pressione Enter para manter o atual):");
             scanner.nextLine();
             String newName = scanner.nextLine();
-            if (!newName.isEmpty()) {
-                workoutFacade.updateWorkout(index, newName);
-            }
+            String old = workoutFacade.readWorkoutByIndex(index).getName();
             System.out.println("Digite a nova descrição do treino (ou pressione Enter para manter a atual):");
             String newDescription = scanner.nextLine();
             if (!newDescription.isEmpty()) {
-                workoutFacade.updateWorkout(index, index, newDescription);
+                workoutFacade.updateWorkout(index,newName, newDescription, old);
             }
             System.out.println("Treino atualizado com sucesso!");
         } else {
