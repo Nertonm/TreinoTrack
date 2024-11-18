@@ -348,7 +348,7 @@ public class UIadmin {
     private void readWorkouts() {
         System.out.println("Lista de Treinos:");
         for (int i = 0; i < workoutFacade.loadWorkouts().size(); i++) {
-            System.out.println("\nÍndice: " + i
+            System.out.println("\nÍndice: " + i + "\n"
                     + workoutFacade.readWorkoutByIndex(i));
         }
     }
@@ -427,8 +427,7 @@ public class UIadmin {
     private void readExercises() {
         System.out.println("Lista de Exercícios:");
         for (int i = 0; i < exerciseFacade.getExercises().size(); i++) {
-            System.out.println("\nÍndice: " + i
-                    + exerciseFacade.getExerciseByIndex(i));
+            System.out.println("\nÍndice: " + i + "\n" + exerciseFacade.getExerciseByIndex(i));
         }
     }
 
