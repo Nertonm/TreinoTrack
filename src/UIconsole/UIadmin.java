@@ -254,7 +254,7 @@ public class UIadmin {
                         System.out.println("Nenhum usuário disponível.");
                     } else {
                         System.out.println("Digite o índice do usuário:");
-                        int userIndex = scanner.nextInt();
+                        int userIndex = getValidInt("");
                         while (userIndex > userFacade.getUsers().size() - 1) {
                             System.out.println("Índice inválido.");
                             userIndex = scanner.nextInt();
