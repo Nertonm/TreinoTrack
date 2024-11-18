@@ -10,10 +10,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import treinotrack.service.UserService;
 
 public class UserWorkoutReader {
     private static final Logger logger = Logger.getLogger(UserWorkoutReader.class.getName());
     private final List<String> exercicios = new ArrayList<>();
+    private final UserService userService = new UserService();
 
     public static void main(String[] args) {
         if (args.length < 2) {
@@ -50,8 +52,8 @@ public class UserWorkoutReader {
 
             int userStartIndex = jsonString.indexOf("[{");
             if (userStartIndex != -1) {
-                String usersJson = jsonString.substring(userStartIndex, jsonString.indexOf("]") + 1);
-                String[] users = usersJson.split("\\},\\{");
+                String usersJson = jsonString.substring(userStartIndex, jsonString.lastIndexOf("]") + 1);
+                String[] users = usersJson.split("\\},\\s*\\{");
                 if (userIndex < users.length) {
                     String userJson = users[userIndex].replace("[{", "").replace("}]", "").replace("{", "").replace("}", "");
                     logger.info("User JSON: " + userJson);

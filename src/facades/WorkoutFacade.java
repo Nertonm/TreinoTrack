@@ -35,9 +35,9 @@ public class WorkoutFacade {
         return userWorkoutReader.getExercises();
     }
 
-    public void createWorkout(User user, String name, String description) {
+    public void createWorkout(String name, String description) {
         try {
-            workoutService.createWorkout(user, name, description);
+            workoutService.createWorkout(name, description);
             logger.info("Workout created successfully.");
         } catch (Exception e) {
             logger.severe("Error creating workout: " + e.getMessage());
@@ -56,34 +56,27 @@ public class WorkoutFacade {
         }
     }
 
-    public void updateWorkout(User user, int index, String name, String description) {
+    public void updateWorkout(  int index, int a, String description) {
         try {
-            workoutService.updateWorkout(user, index, name, description);
+            workoutService.updateWorkout( index, description);
             logger.info("Workout updated successfully.");
         } catch (Exception e) {
             logger.severe("Error updating workout: " + e.getMessage());
         }
     }
-    public void updateWorkout(User user, int index, int a, String description) {
+    public void updateWorkout( int index, String name) {
         try {
-            workoutService.updateWorkout(user, index, description);
-            logger.info("Workout updated successfully.");
-        } catch (Exception e) {
-            logger.severe("Error updating workout: " + e.getMessage());
-        }
-    }
-    public void updateWorkout(User user, int index, String name) {
-        try {
-            workoutService.updateWorkout(user, index, name);
+            workoutService.updateWorkout(index, name);
             logger.info("Workout updated successfully.");
         } catch (Exception e) {
             logger.severe("Error updating workout: " + e.getMessage());
         }
     }
 
-    public void deleteWorkout(User user, int index) {
+
+    public void deleteWorkout(int index) {
         try {
-            workoutService.deleteWorkout(user, index);
+            workoutService.deleteWorkout( index);
             logger.info("Workout deleted successfully.");
         } catch (Exception e) {
             logger.severe("Error deleting workout: " + e.getMessage());

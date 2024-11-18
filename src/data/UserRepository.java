@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class UserRepository implements IUserRepository {
     private final ArrayList<User> users;
     private static final String FILE_NAME = "users.json";
-    private static final Logger logger = Logger.getLogger(UserRepository.class.getName());
+    //private static final Logger logger = Logger.getLogger(UserRepository.class.getName());
 
     public UserRepository() {
         users = new ArrayList<>();
@@ -34,9 +34,9 @@ public class UserRepository implements IUserRepository {
         if (index >= 0 && index < users.size()) {
             users.set(index, updatedUser);
             saveUsers();
-            logger.info("User updated successfully at index " + index);
+            //logger.info("User updated successfully at index " + index);
         } else {
-            logger.severe("Invalid index for updating user: " + index);
+            //logger.severe("Invalid index for updating user: " + index);
             throw new IndexOutOfBoundsException("Índice inválido para atualização de usuário.");
         }
     }
@@ -54,9 +54,9 @@ public class UserRepository implements IUserRepository {
             User user = users.get(userIndex);
             user.getWorkouts().add(workoutName);
             saveUsers();
-            logger.info("Workout assigned successfully to user at index " + userIndex);
+            //logger.info("Workout assigned successfully to user at index " + userIndex);
         } else {
-            logger.severe("Invalid index for assigning workout: " + userIndex);
+            //logger.severe("Invalid index for assigning workout: " + userIndex);
             throw new IndexOutOfBoundsException("Índice inválido para atribuir treino.");
         }
     }
@@ -66,12 +66,12 @@ public class UserRepository implements IUserRepository {
             User user = users.get(userIndex);
             if (user.getWorkouts().remove(workoutName)) {
                 saveUsers();
-                logger.info("Workout unassigned successfully from user at index " + userIndex);
+                //logger.info("Workout unassigned successfully from user at index " + userIndex);
             } else {
-                logger.warning("Workout not found for user at index " + userIndex);
+                //logger.warning("Workout not found for user at index " + userIndex);
             }
         } else {
-            logger.severe("Invalid index for unassigning workout: " + userIndex);
+           // logger.severe("Invalid index for unassigning workout: " + userIndex);
             throw new IndexOutOfBoundsException("Índice inválido para desatribuir treino.");
         }
     }
@@ -103,9 +103,9 @@ public class UserRepository implements IUserRepository {
                 }
             }
             writer.write("]");
-            logger.info("Users saved successfully.");
+            //logger.info("Users saved successfully.");
         } catch (IOException e) {
-            logger.severe("Error saving users: " + e.getMessage());
+            //logger.severe("Error saving users: " + e.getMessage());
         }
     }
 
@@ -142,11 +142,11 @@ public class UserRepository implements IUserRepository {
                     users.add(user);
                 }
             }
-            logger.info("Users loaded successfully.");
+            //logger.info("Users loaded successfully.");
         } catch (FileNotFoundException e) {
-            logger.warning("User file not found. Creating new file.");
+            //logger.warning("User file not found. Creating new file.");
         } catch (IOException e) {
-            logger.severe("Error loading users: " + e.getMessage());
+            //logger.severe("Error loading users: " + e.getMessage());
         }
     }
 }

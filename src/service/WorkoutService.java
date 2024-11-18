@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class WorkoutService {
-	private WorkoutRepository workoutRepository;
+	private final WorkoutRepository workoutRepository;
 	private static final Logger logger = Logger.getLogger(WorkoutService.class.getName());
 
 	public WorkoutService() {
@@ -21,13 +21,13 @@ public class WorkoutService {
 		return workoutRepository.getWorkouts();
 	}
 
-	public void createWorkout(User user, String name, String description) {
+	public void createWorkout(String name, String description) {
 		Workout workout = new Workout(name, description);
 		workoutRepository.createWorkout(workout);
 		logger.info("Workout created successfully.");
 	}
 
-	public void updateWorkout(User user, int index, String name, String description) {
+	public void updateWorkout(int index, String name, String description) {
 		List<Workout> workouts = workoutRepository.getWorkouts();
 		if (index >= 0 && index < workouts.size()) {
 			Workout workout = workouts.get(index);
@@ -39,7 +39,7 @@ public class WorkoutService {
 			logger.severe("Invalid index for workout update.");
 		}
 	}
-	public void updateWorkout(User user, int index, String name) {
+	public void updateWorkout(int index, String name) {
 		List<Workout> workouts = workoutRepository.getWorkouts();
 		if (index >= 0 && index < workouts.size()) {
 			Workout workout = workouts.get(index);
@@ -66,7 +66,7 @@ public class WorkoutService {
 
 
 
-	public void deleteWorkout(User user, int index) {
+	public void deleteWorkout(int index) {
 		List<Workout> workouts = workoutRepository.getWorkouts();
 		if (index >= 0 && index < workouts.size()) {
 			workoutRepository.deleteWorkout(index);

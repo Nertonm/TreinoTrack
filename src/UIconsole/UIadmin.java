@@ -228,34 +228,44 @@ public class UIadmin {
     }
     public void startWorkoutManager() {
         int option;
-        //List<User> users = userFacade.readUsers();
-        if (userFacade.readUsers().isEmpty()) {
-            System.out.println("Nenhum usuário disponível.");
-        }
-        else {
-            System.out.println("Digite o índice do usuário:");
-            int userIndex = scanner.nextInt();
-            scanner.nextLine();
-            while (userIndex > userFacade.getUsers().size() - 1) {
-                System.out.println("Índice inválido.");
-                userIndex = scanner.nextInt();
-            }
-            System.out.println("Saindo do Gerenciamento de Treinos de User...");
-            do {
-                displayWorkoutMenu();
-                option = getValidInt("Escolha uma opção:(1-7)");
-                switch (option) {
-                    case 1 -> createWorkout(userIndex);
-                    case 2 -> readWorkouts(userIndex);
-                    case 3 -> updateWorkout(userIndex);
-                    case 4 -> deleteWorkout(userIndex);
-                    case 5 -> assignWorkout(userIndex);
-                    case 6 -> unassignWorkout(userIndex);
-                    case 7 -> System.out.println("Saindo do Gerenciamento de Treinos...");
-                    default -> System.out.println("Opção inválida");
+        do {
+            displayWorkoutMenu();
+            option = getValidInt("Escolha uma opção:(1-7)");
+            switch (option) {
+                case 1 -> createWorkout();
+                case 2 -> readWorkouts();
+                case 3 -> updateWorkout();
+                case 4 -> deleteWorkout();
+                case 5 -> {
+                    if (userFacade.readUsers().isEmpty()) {
+                        System.out.println("Nenhum usuário disponível.");
+                    } else {
+                        System.out.println("Digite o índice do usuário:");
+                        int userIndex = scanner.nextInt();
+                        while (userIndex > userFacade.getUsers().size() - 1) {
+                            System.out.println("Índice inválido.");
+                            userIndex = scanner.nextInt();
+                        }
+                        assignWorkout(userIndex);
+                    }
                 }
-            } while (option != 7);
-        }
+                case 6 -> {
+                    if (userFacade.readUsers().isEmpty()) {
+                        System.out.println("Nenhum usuário disponível.");
+                    } else {
+                        System.out.println("Digite o índice do usuário:");
+                        int userIndex = scanner.nextInt();
+                        while (userIndex > userFacade.getUsers().size() - 1) {
+                            System.out.println("Índice inválido.");
+                            userIndex = scanner.nextInt();
+                        }
+                        unassignWorkout(userIndex);
+                    }
+                }
+                case 7 -> System.out.println("Saindo do Gerenciamento de Treinos...");
+                default -> System.out.println("Opção inválida");
+            }
+        } while (option != 7);
     }
 
 
@@ -310,7 +320,7 @@ public class UIadmin {
             }
         } while (option != 5);
     }
-    private void createWorkout(int userIndex) {
+    private void createWorkout() {
         String name;
         do {
             System.out.println("Digite o nome do treino:");
@@ -328,12 +338,11 @@ public class UIadmin {
                 System.out.println("Descrição do treino não pode ser vazia. Por favor, insira uma descrição válida.");
             }
         } while (description.isEmpty());
-
-        workoutFacade.createWorkout(userFacade.readUserByIndex(userIndex), name, description);
+        workoutFacade.createWorkout(name, description);
         System.out.println("Treino criado com sucesso!");
     }
 
-    private void readWorkouts(int userIndex) {
+    private void readWorkouts() {
         System.out.println("Lista de Treinos:");
         for (int i = 0; i < workoutFacade.loadWorkouts().size(); i++) {
             System.out.println("\nÍndice: " + i
@@ -341,41 +350,32 @@ public class UIadmin {
         }
     }
 
-    private void updateWorkout(int userIndex) {
-        readWorkouts(userIndex);
+    private void updateWorkout() {
+        readWorkouts();
         int index = getValidInt("Digite o índice do treino a ser atualizado:");
         if (index >= 0 && index <  workoutFacade.loadWorkouts().size()) {
             System.out.println("Digite o novo nome do treino (ou pressione Enter para manter o atual):");
+            scanner.nextLine();
             String newName = scanner.nextLine();
             if (!newName.isEmpty()) {
-                workoutFacade.updateWorkout(userFacade.readUserByIndex(userIndex), index, newName);
+                workoutFacade.updateWorkout(index, newName);
             }
             System.out.println("Digite a nova descrição do treino (ou pressione Enter para manter a atual):");
             String newDescription = scanner.nextLine();
             if (!newDescription.isEmpty()) {
-                workoutFacade.updateWorkout(userFacade.readUserByIndex(userIndex), index, index, newDescription);
+                workoutFacade.updateWorkout(index, index, newDescription);
             }
-            if (newDescription.isEmpty() && newName.isEmpty()) {
-                System.out.println("Nada foi alterado.");
-                return;
-            }
-            if (!(newDescription.isEmpty() && newName.isEmpty())) {
-                workoutFacade.updateWorkout(userFacade.readUserByIndex(userIndex), index, newName, newDescription);
-                System.out.println("Treino atualizado com sucesso!");
-                return;
-            }
-
             System.out.println("Treino atualizado com sucesso!");
         } else {
             System.out.println("Índice inválido.");
         }
     }
 
-    private void deleteWorkout(int userIndex) {
-        readWorkouts(userIndex);
+    private void deleteWorkout() {
+        System.out.println(workoutFacade.loadWorkouts());
         int index = getValidInt("Digite o índice do treino a ser deletado:");
         if (index >= 0 && index <  workoutFacade.loadWorkouts().size()) {
-            workoutFacade.deleteWorkout(userFacade.readUserByIndex(userIndex), index);
+            workoutFacade.deleteWorkout(index);
             System.out.println("Treino deletado com sucesso!");
         } else {
             System.out.println("Índice inválido.");
