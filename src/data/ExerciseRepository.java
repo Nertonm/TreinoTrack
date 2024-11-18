@@ -2,6 +2,7 @@
 package treinotrack.data;
 
 import treinotrack.data.models.exercises.*;
+import treinotrack.interfaces.IExerciseRepository;
 
 
 import java.io.*;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class ExerciseRepository {
+public class ExerciseRepository implements IExerciseRepository {
     private List<ExerciseAbstract> exercises;
     private static final String FILE_NAME = "exercises.json";
     private static final Logger logger = Logger.getLogger(ExerciseRepository.class.getName());
@@ -19,6 +20,7 @@ public class ExerciseRepository {
         loadExercises();
     }
 
+    @Override
     public void addExercise(ExerciseAbstract exercise) {
         exercises.add(exercise);
         saveExercises();
@@ -28,6 +30,7 @@ public class ExerciseRepository {
         return exercises;
     }
 
+    @Override
     public void removeExercise(ExerciseAbstract exercise) {
         exercises.remove(exercise);
         saveExercises();

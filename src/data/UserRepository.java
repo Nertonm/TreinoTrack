@@ -1,13 +1,14 @@
 // UserRepository.java
 package treinotrack.data;
 
+import treinotrack.interfaces.IUserRepository;
 import treinotrack.data.models.User;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class UserRepository {
+public class UserRepository implements IUserRepository {
     private final ArrayList<User> users;
     private static final String FILE_NAME = "users.json";
     private static final Logger logger = Logger.getLogger(UserRepository.class.getName());
@@ -17,15 +18,18 @@ public class UserRepository {
         loadUsers();
     }
 
+    @Override
     public void addUser(User user) {
         users.add(user);
         saveUsers();
     }
 
+    @Override
     public ArrayList<User> getUsers() {
         return users;
     }
 
+    @Override
     public void updateUser(int index, User updatedUser) {
         if (index >= 0 && index < users.size()) {
             users.set(index, updatedUser);
@@ -37,12 +41,14 @@ public class UserRepository {
         }
     }
 
+    @Override
     public void deleteUser(int i) {
         if (i >= 0 && i < users.size()) {
             users.remove(i);
             saveUsers();
         }
     }
+
     public void assignWorkoutToUser(int userIndex, String workoutName) {
         if (userIndex >= 0 && userIndex < users.size()) {
             User user = users.get(userIndex);
@@ -70,6 +76,7 @@ public class UserRepository {
         }
     }
 
+    @Override
     public void saveUsers() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, false))) {
             writer.write("[");

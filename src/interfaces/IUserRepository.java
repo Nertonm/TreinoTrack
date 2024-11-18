@@ -9,4 +9,5 @@ public interface IUserRepository {
     void saveUsers();
     void updateUser(int index, User user);
     void deleteUser(int index);
+
 }
