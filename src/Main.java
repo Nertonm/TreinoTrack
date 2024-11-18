@@ -18,7 +18,7 @@ public class Main {
         String role = scanner.nextLine();
         if (role.equalsIgnoreCase("admin")) {
             System.out.println("Admin access granted.");
-            UIadmin console =  new UIadmin(userFacade,workoutFacade,exerciseFacade);
+            UIadmin console = new UIadmin(userFacade, workoutFacade, exerciseFacade);
             console.start();
             console.close();
         } else if (role.equalsIgnoreCase("user")) {
