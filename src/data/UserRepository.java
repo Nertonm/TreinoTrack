@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class UserRepository {
-    private ArrayList<User> users;
+    private final ArrayList<User> users;
     private static final String FILE_NAME = "users.json";
     private static final Logger logger = Logger.getLogger(UserRepository.class.getName());
 

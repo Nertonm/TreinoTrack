@@ -5,16 +5,34 @@ import treinotrack.data.models.Workout;
 import treinotrack.data.models.User;
 import treinotrack.data.models.exercises.ExerciseAbstract;
 import treinotrack.service.WorkoutService;
+import treinotrack.service.UserWorkoutReader;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class WorkoutFacade {
     private final WorkoutService workoutService;
+    private final UserWorkoutReader userWorkoutReader;
     private static final Logger logger = Logger.getLogger(WorkoutFacade.class.getName());
 
     public WorkoutFacade() {
         this.workoutService = new WorkoutService();
+        this.userWorkoutReader = new UserWorkoutReader();
+    }
+
+    public List<String> startReading(int userIndex) {
+        if (userIndex < 0) {
+            System.out.println("Invalid user index.");
+            return new ArrayList<>();
+        }
+        String userFilePath = "users.json";
+        List<String> workoutNames = userWorkoutReader.readUserWorkouts(userFilePath, userIndex);
+        for (String workoutName : workoutNames) {
+            userWorkoutReader.addStringJsonMaluco((workoutName + "\n"));
+            userWorkoutReader.showWorkoutDetails(workoutName);
+        }
+        return userWorkoutReader.getExercises();
     }
 
     public void createWorkout(User user, String name, String description) {
@@ -25,6 +43,7 @@ public class WorkoutFacade {
             logger.severe("Error creating workout: " + e.getMessage());
         }
     }
+
 
     public List<Workout> loadWorkouts() {
         try {

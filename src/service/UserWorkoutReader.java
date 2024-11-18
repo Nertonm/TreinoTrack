@@ -4,7 +4,6 @@ import treinotrack.data.models.exercises.Hike;
 import treinotrack.data.models.exercises.Race;
 import treinotrack.data.models.exercises.Strength;
 import treinotrack.data.models.exercises.Treadmil;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,34 +13,31 @@ import java.util.logging.Logger;
 
 public class UserWorkoutReader {
     private static final Logger logger = Logger.getLogger(UserWorkoutReader.class.getName());
+    private final List<String> exercicios = new ArrayList<>();
 
     public static void main(String[] args) {
         if (args.length < 2) {
-            System.out.println("UserWorkoutReader <userFilePath> <userIndex>");
+            System.out.println("Usage: UserWorkoutReader <userFilePath> <userIndex>");
             return;
         }
 
         String userFilePath = args[0];
         int userIndex = Integer.parseInt(args[1]);
-        List<String> workoutNames = readUserWorkouts(userFilePath, userIndex);
+        UserWorkoutReader reader = new UserWorkoutReader();
+        List<String> workoutNames = reader.readUserWorkouts(userFilePath, userIndex);
         for (String workoutName : workoutNames) {
-            showWorkoutDetails(workoutName);
+            reader.showWorkoutDetails(workoutName);
         }
     }
-
-    public static void start(int userIndex) {
-        if (userIndex < 0) {
-            System.out.println("Invalid user index.");
-            return;
-        }
-        String userFilePath = "users.json";
-        List<String> workoutNames = readUserWorkouts(userFilePath, userIndex);
-        for (String workoutName : workoutNames) {
-            showWorkoutDetails(workoutName);
-        }
+    public List<String> getExercises() {
+        return this.exercicios;
     }
 
-    private static List<String> readUserWorkouts(String filePath, int userIndex) {
+    public void addStringJsonMaluco(String i) {
+       this.exercicios.add(i);
+    }
+
+    public List<String> readUserWorkouts(String filePath, int userIndex) {
         List<String> workoutsNamePath = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             StringBuilder json = new StringBuilder();
@@ -78,7 +74,7 @@ public class UserWorkoutReader {
         return workoutsNamePath;
     }
 
-    private static void showWorkoutDetails(String workoutName) {
+    public void showWorkoutDetails(String workoutName) {
         String workoutFileName = "workouts/" + workoutName + ".json";
         try (BufferedReader reader = new BufferedReader(new FileReader(workoutFileName))) {
             StringBuilder json = new StringBuilder();
@@ -94,7 +90,7 @@ public class UserWorkoutReader {
         }
     }
 
-    private static void parseWorkoutJson(String jsonString) {
+    private void parseWorkoutJson(String jsonString) {
         if (!jsonString.isEmpty()) {
             int exercisesStartIndex = jsonString.indexOf("\"exercises\":");
             if (exercisesStartIndex != -1) {
@@ -105,7 +101,8 @@ public class UserWorkoutReader {
             }
         }
     }
-    private static void parseExercisesJson(String jsonString) {
+
+    private void parseExercisesJson(String jsonString) {
         if (!jsonString.isEmpty()) {
             jsonString = jsonString.substring(1, jsonString.length() - 1); // Remove brackets
             String[] exerciseStrings = jsonString.split("\\},\\{");
@@ -119,10 +116,9 @@ public class UserWorkoutReader {
                 String type = fields[0].split(":")[1].replace("\"", "").trim();
                 String name = fields[1].split(":")[1].replace("\"", "").trim();
                 String description = fields[2].split(":")[1].replace("\"", "").trim().replace("\\n", "\n");
-                System.out.println("Type: " + type);
-                System.out.println("Name: " + name);
-                System.out.println("Description: " + description);
-                System.out.println();
+               addStringJsonMaluco("Name: " + name);
+               addStringJsonMaluco("    Type: " + type);
+               addStringJsonMaluco("    Description: " + description);
                 switch (type) {
                     case "Treadmil":
                         if (fields.length < 5) {
@@ -132,8 +128,8 @@ public class UserWorkoutReader {
                         double speed = Double.parseDouble(fields[3].split(":")[1].replace("\"", "").trim());
                         double duration = Double.parseDouble(fields[4].split(":")[1].replace("\"", "").trim());
                         new Treadmil(duration, speed, name, description);
-                        System.out.println("Speed: " + speed);
-                        System.out.println("Duration: " + duration);
+                       addStringJsonMaluco("    Speed: " + speed);
+                       addStringJsonMaluco("    Duration: " + duration + "\n");
                         break;
                     case "Hike":
                         if (fields.length < 4) {
@@ -142,7 +138,7 @@ public class UserWorkoutReader {
                         }
                         double hikeDuration = Double.parseDouble(fields[3].split(":")[1].replace("\"", "").trim());
                         new Hike(hikeDuration, name, description);
-                        System.out.println("Duration: " + hikeDuration);
+                       addStringJsonMaluco("    Duration: " + hikeDuration + "\n");
                         break;
                     case "Race":
                         if (fields.length < 4) {
@@ -151,7 +147,7 @@ public class UserWorkoutReader {
                         }
                         double raceDuration = Double.parseDouble(fields[3].split(":")[1].replace("\"", "").trim());
                         new Race(raceDuration, name, description);
-                        System.out.println("Duration: " + raceDuration);
+                       addStringJsonMaluco("    Duration: " + raceDuration + "\n");
                         break;
                     case "Strength":
                         if (fields.length < 6) { // Adjusted to check for 6 fields
@@ -162,9 +158,9 @@ public class UserWorkoutReader {
                         int reps = Integer.parseInt(fields[4].split(":")[1].replace("\"", "").trim());
                         float strengthWeight = Float.parseFloat(fields[5].split(":")[1].replace("\"", "").trim());
                         new Strength(sets, reps, strengthWeight, name, description);
-                        System.out.println("Sets: " + sets);
-                        System.out.println("Reps: " + reps);
-                        System.out.println("Weight: " + strengthWeight);
+                       addStringJsonMaluco("    Sets: " + sets);
+                       addStringJsonMaluco("    Reps: " + reps);
+                       addStringJsonMaluco("    Weight: " + strengthWeight + "\n");
                         break;
                     default:
                         logger.warning("Unknown exercise type: " + type);

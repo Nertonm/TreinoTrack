@@ -14,7 +14,7 @@ public class Race extends Cardio {
 */
     @Override
     public double getMET() {
-        return 12.5; // Intense running
+        return 12.5;
     }
 
     @Override

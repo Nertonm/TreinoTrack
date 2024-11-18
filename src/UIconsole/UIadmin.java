@@ -1,4 +1,3 @@
-// IU.java
 package treinotrack.UIconsole;
 
 import treinotrack.facades.ExerciseFacade;
@@ -118,7 +117,7 @@ public class UIadmin {
                     int i = getValidInt("Digite o índice do usuário:");
                     if (i >= 0 && i < userFacade.getUsers().size()) {
                         System.out.println("Digite o novo nome:");
-                        scanner.nextLine(); // Clear the buffer
+                        scanner.nextLine();
                         String name = scanner.nextLine();
                         while (name.isEmpty()) {
                             System.out.println("Nome não pode ser vazio. Digite o nome:");
@@ -269,7 +268,7 @@ public class UIadmin {
     }
 
     private void unassignWorkout(int userIndex) {
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
         System.out.println("Enter workout name:");
         String workoutName = scanner.nextLine();
         userFacade.unassignWorkoutFromUser(userIndex, workoutName);
@@ -286,12 +285,12 @@ public class UIadmin {
                 int exerciseIndex = scanner.nextInt();
                 workoutFacade.addExerciseToWorkout(workoutIndex, exerciseFacade.getExerciseByIndex(exerciseIndex));
                 System.out.println("Exercise assigned to workout successfully.");
-                break; // Exit the loop if successful
+                break;
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Invalid index. Please try again.");
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a valid number.");
-                scanner.next(); // Clear the invalid input
+                scanner.next();
             }
         }
     }
