@@ -24,7 +24,7 @@ public class Main {
         } else if (role.equalsIgnoreCase("user")) {
             System.out.println("Enter your Index:");
             int index = scanner.nextInt();
-            UIuser console = new UIuser(workoutFacade, userFacade);
+            UIuser console = new UIuser(workoutFacade, userFacade.getUsers().size());
             console.showUserWorkouts(index);
         } else {
             System.out.println("Invalid role. Exiting.");
