@@ -34,3 +34,4 @@ app/schemas/__pycache__/registrotreino.cpython-39.pyc
 app/schemas/__pycache__/treino.cpython-39.pyc
 app/schemas/__pycache__/treinoexercicio.cpython-39.pyc
 app/schemas/__pycache__/usuariotreino.cpython-39.pyc
+app/routers/__pycache__/frontend.cpython-39.pyc
