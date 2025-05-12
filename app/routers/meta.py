@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import SessionLocal
-from models import *
 from typing import List
-from models.
+from schemas.meta import MetaRead, MetaCreate, MetaUpdate
+from models.meta import *
+from models.usuario import Usuario
 
 def get_db():
     db = SessionLocal()
@@ -18,6 +19,10 @@ router = APIRouter(prefix="/metas", tags=["Metas"])
 # Função para criar uma meta
 @router.post("/", response_model=MetaRead)
 def criar_meta(meta: MetaCreate, db: Session = Depends(get_db)):
+    # Verifica se o aluno existe
+    aluno = db.query(Usuario).filter(Usuario.id == meta.id_aluno).first()
+    if not aluno:
+        raise HTTPException(status_code=400, detail="Aluno não encontrado")
     db_meta = Meta(**meta.dict())
     db.add(db_meta)
     db.commit()
