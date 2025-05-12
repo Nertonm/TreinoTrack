@@ -4,6 +4,8 @@ from database import SessionLocal
 from typing import List
 from models.exercicio import Exercicio
 from schemas.exercicio import ExercicioCreate, ExercicioRead, ExercicioUpdate
+from models.registrotreino import RegistroTreino
+from schemas.registrotreino import RegistroTreinoRead
 
 def get_db():
     db = SessionLocal()
@@ -52,3 +54,17 @@ def deletar_exercicio(exercicio_id: int, db: Session = Depends(get_db)):
     db.delete(exercicio)
     db.commit()
     return {"ok": True}
+
+from datetime import datetime, timedelta
+
+@router.get("/usuario/{usuario_id}/ultima-semana", response_model=List[RegistroTreinoRead])
+def listar_registros_ultima_semana(usuario_id: int, db: Session = Depends(get_db)):
+    uma_semana_atras = datetime.now() - timedelta(days=7)
+    registros = (
+        db.query(RegistroTreino)
+        .filter(RegistroTreino.id_usuario == usuario_id, RegistroTreino.data_inicio >= uma_semana_atras)
+        .all()
+    )
+    if not registros:
+        raise HTTPException(status_code=404, detail="Nenhum registro encontrado na última semana.")
+    return registros
