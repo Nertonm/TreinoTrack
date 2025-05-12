@@ -1,0 +1,27 @@
+
+services:
+  mariadb:
+    image: mariadb:latest
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.mariadb
+    restart: always
+    environment:
+      MYSQL_DATABASE: FitLife
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 123
+      MYSQL_ROOT_PASSWORD: 123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadbdata:/var/lib/mysql
+      - ./db-init:/docker-entrypoint-initdb.d
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mariadbdata:
