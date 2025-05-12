@@ -18,7 +18,17 @@ services:
       - ./db-init:/docker-entrypoint-initdb.d
     networks:
       - app-network
-
+  python:
+    image: python:3.9
+    container_name: python
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    networks:
+      - app-network
+    command: sh -c "pip install --no-cache-dir -r requirements.txt && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
 networks:
   app-network:
     driver: bridge
